@@ -1,0 +1,6 @@
+{
+  "name": "marchese-fifa-2026",
+  "version": "1.0.0",
+  "description": "Art By Marchese x FIFA World Cup 2026 - Toronto Drop Campaign",
+  "engines": { "node": ">=18" }
+}
