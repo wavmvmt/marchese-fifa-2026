@@ -3,552 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Art By Marchese x FIFA World Cup 2026 | Toronto</title>
-<meta name="description" content="Limited edition diamond-dust art drops starting May 2026. Toronto. Canada's first home World Cup game. Get first access.">
+<title>Art By Marchese x FIFA 2026 | Toronto</title>
+<meta name="description" content="40 hand-painted diamond-dust skateboard decks. FIFA World Cup 2026 Toronto. Drops May 15.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-:root{
-  --gold:#C9A84C;--gl:#E8C97A;--gd:rgba(201,168,76,.12);
-  --black:#050505;--dark:#0D0D0D;--mid:#161616;--panel:#1C1C1C;
-  --border:rgba(201,168,76,.16);--text:#DDD9D0;--muted:#6E6B64;--white:#F8F6F2;
-  --green:#2ECC71;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+:root{--gold:#C9A84C;--gl:#E8C97A;--black:#040404;--dark:#0C0C0C;--mid:#141414;--border:rgba(201,168,76,.15);--text:#DAD6CC;--muted:#6A6760;--white:#F5F3EE;--green:#2ECC71}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
-
-/* BAR */
-.bar{background:linear-gradient(90deg,#8B6914,var(--gold),#8B6914);background-size:200%;animation:shim 3s linear infinite;color:#000;text-align:center;padding:11px 24px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;position:relative;z-index:200}
+#intro-overlay{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:opacity .8s ease .2s;cursor:pointer}
+#intro-overlay.gone{opacity:0;pointer-events:none}
+#ball-canvas-3d{position:absolute;inset:0;width:100%;height:100%}
+.flash{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(201,168,76,.5),transparent 60%);opacity:0;pointer-events:none;animation:flashb .4s ease 1.1s forwards}
+@keyframes flashb{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+.intro-txt{position:absolute;bottom:16%;left:50%;transform:translateX(-50%);text-align:center;z-index:2;opacity:0;animation:fadeUp .8s ease 1.7s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(24px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.intro-sub{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.intro-main{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,7vw,80px);font-weight:300;color:#fff;line-height:.92}
+.intro-main em{color:var(--gold);font-style:italic;display:block}
+.intro-skip{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);z-index:3}
+.bar{background:linear-gradient(90deg,#7A5F10,var(--gold),#C9A84C,#7A5F10);background-size:300%;animation:shim 4s linear infinite;color:#000;text-align:center;padding:10px 24px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;position:relative;z-index:200}
 @keyframes shim{0%{background-position:100%}100%{background-position:-100%}}
-
-/* NAV */
 nav{position:fixed;top:36px;left:0;right:0;z-index:150;padding:0 56px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
-nav.scrolled{background:rgba(5,5,5,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);top:0}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);text-decoration:none}
-.nav-logo span{color:var(--gold)}
-.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover,.nav-links a:focus{color:var(--gold)}
-.nav-btn{background:var(--gold);color:#000;padding:10px 24px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .2s}
-.nav-btn:hover{background:var(--gl)}
-
-/* HERO */
+nav.scrolled{background:rgba(4,4,4,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);top:0}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);text-decoration:none}
+.logo span{color:var(--gold)}.nav-l{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-l a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
+.nav-l a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:#000;padding:10px 24px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--gl)}
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 72px 96px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 25%,rgba(201,168,76,.07) 0%,transparent 55%),radial-gradient(ellipse at 15% 75%,rgba(201,168,76,.04) 0%,transparent 45%),linear-gradient(180deg,#050505 0%,#070504 60%,#050505 100%);z-index:0}
-.hero-grid{position:absolute;inset:0;z-index:0;opacity:.025;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:80px 80px}
-.orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.15) 0%,transparent 70%);animation:drift ease-in-out infinite;pointer-events:none;z-index:0}
-.o1{width:600px;height:600px;top:-100px;right:-100px;animation-duration:18s}
-.o2{width:400px;height:400px;bottom:0;left:-80px;animation-duration:22s;animation-delay:-8s}
-@keyframes drift{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-40px) scale(1.05)}}
-.hero-content{position:relative;z-index:1}
-.hero-eye{display:flex;align-items:center;gap:16px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
-.hero-eye::before{content:'';width:48px;height:1px;background:var(--gold)}
-.dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
-.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(64px,10vw,140px);font-weight:300;line-height:.9;color:var(--white);margin-bottom:16px;letter-spacing:-2px}
-.hero-h1 em{color:var(--gold);font-style:italic;display:block}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.2vw,24px);font-weight:300;font-style:italic;color:var(--muted);margin-bottom:48px;max-width:560px}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.hbg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(201,168,76,.08) 0%,transparent 50%),radial-gradient(ellipse at 20% 80%,rgba(201,168,76,.04) 0%,transparent 45%),#040404;z-index:0}
+.hgrid{position:absolute;inset:0;z-index:0;opacity:.02;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:72px 72px}
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);animation:orbd ease-in-out infinite}
+.o1{width:700px;height:700px;top:-150px;right:-120px;animation-duration:20s}
+.o2{width:500px;height:500px;bottom:-50px;left:-100px;animation-duration:25s;animation-delay:-10s}
+@keyframes orbd{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-50px) scale(1.06)}}
+.hc{position:relative;z-index:1}
+.heye{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.heye::before{content:'';width:44px;height:1px;background:var(--gold)}
+.pdot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pd 2s ease-in-out infinite}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.ht1{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,11vw,148px);font-weight:300;line-height:.88;color:var(--white);margin-bottom:16px;letter-spacing:-3px}
+.ht1 em{color:var(--gold);font-style:italic;display:block}
+.hsub{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:var(--muted);margin-bottom:48px;max-width:520px}
+.hbtns{display:flex;gap:16px;flex-wrap:wrap}
 .btn-g{padding:17px 44px;background:var(--gold);color:#000;font-weight:700;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;font-family:'Space Grotesk',sans-serif;transition:all .2s;display:inline-block}
 .btn-g:hover{background:var(--gl);transform:translateY(-2px)}
-.btn-o{padding:17px 36px;background:transparent;color:var(--text);font-weight:500;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:1px solid rgba(255,255,255,.15);font-family:'Space Grotesk',sans-serif;transition:all .2s;display:inline-block}
+.btn-o{padding:17px 36px;background:transparent;color:var(--text);font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:1px solid rgba(255,255,255,.12);font-family:'Space Grotesk',sans-serif;transition:all .2s;display:inline-block}
 .btn-o:hover{border-color:var(--gold);color:var(--gold)}
-.hero-side{position:absolute;right:72px;bottom:96px;z-index:1;display:flex;flex-direction:column;gap:28px;align-items:flex-end}
-.hs-v{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--gl);line-height:1;text-align:right}
-.hs-l{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-align:right;margin-top:3px}
-.scroll-h{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:1}
-.scroll-l{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:grow 2s ease-in-out infinite}
-@keyframes grow{0%,100%{height:20px;opacity:.3}50%{height:40px;opacity:1}}
-
-/* COUNTDOWN */
-.cd-wrap{background:var(--dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px 72px}
-.cd-inner{display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap}
-.cd-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.cd-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.2vw,36px);font-weight:300;color:var(--white);margin-bottom:6px;line-height:1.2}
-.cd-sub{font-size:13px;color:var(--muted)}
-.cd-sub span{color:var(--gold)}
+.hside{position:absolute;right:72px;bottom:96px;z-index:1;display:flex;flex-direction:column;gap:28px;align-items:flex-end}
+.hsv{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--gl);line-height:1;text-align:right}
+.hsl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);text-align:right;margin-top:2px}
+.si{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:1}
+.sl{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sc 2s ease-in-out infinite}
+@keyframes sc{0%,100%{height:20px;opacity:.3}50%{height:40px;opacity:1}}
+.cd{background:var(--dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 72px}
+.cdi{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.cdlabel{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.cdttl{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:300;color:var(--white);margin-bottom:6px;line-height:1.2}
+.cdsub{font-size:13px;color:var(--muted)}.cdsub span{color:var(--gold)}
 .timer{display:flex;gap:8px;align-items:flex-start}
-.tu{text-align:center;min-width:76px}
-.tn{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6.5vw,76px);font-weight:300;color:var(--white);line-height:1;display:block}
+.tu{text-align:center;min-width:74px}
+.tn{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6.5vw,80px);font-weight:300;color:var(--white);line-height:1;display:block}
 .tl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:4px}
-.tc{font-family:'Cormorant Garamond',serif;font-size:60px;color:rgba(201,168,76,.4);line-height:1.08;padding-top:6px;animation:blink 1s step-end infinite}
-@keyframes blink{0%,100%{opacity:.4}50%{opacity:.1}}
-
-/* PIECE SECTION */
+.tc{font-family:'Cormorant Garamond',serif;font-size:64px;color:rgba(201,168,76,.35);line-height:1.06;padding-top:6px;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:.08}}
 .piece-s{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
-.piece-img{background:#000;position:relative;overflow:hidden;min-height:580px;display:flex;align-items:center;justify-content:center}
-.piece-img img{width:100%;height:100%;object-fit:cover;object-position:center}
-.piece-tag{position:absolute;top:24px;left:24px;background:rgba(201,168,76,.92);color:#000;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;z-index:2}
-.piece-wip{position:absolute;bottom:24px;right:24px;background:rgba(0,0,0,.8);border:1px solid var(--border);color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px}
-.piece-info{background:var(--mid);padding:72px 60px;display:flex;flex-direction:column;justify-content:center}
-.p-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-.p-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,52px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:16px}
-.p-ttl em{color:var(--gold);font-style:italic;display:block}
-.p-desc{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:32px}
-.p-specs{display:flex;flex-direction:column;gap:1px;margin-bottom:32px}
-.p-spec{display:flex;gap:16px;padding:13px 18px;background:rgba(0,0,0,.4)}
-.p-sl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);width:78px;flex-shrink:0;margin-top:2px}
-.p-sv{font-size:13px;color:var(--text);line-height:1.5}
-.p-price{font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--gl);margin-bottom:4px}
-.p-pnote{font-size:12px;color:var(--muted);margin-bottom:24px}
-
-/* CAPTURE */
-.capture{padding:112px 72px;text-align:center;background:linear-gradient(180deg,var(--black) 0%,#0A0700 50%,var(--black) 100%);position:relative;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.capture::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(201,168,76,.05) 0%,transparent 70%);border-radius:50%}
-.cap-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;position:relative}
-.cap-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,96px);font-weight:300;color:var(--white);line-height:.92;margin-bottom:14px;position:relative;letter-spacing:-1px}
-.cap-ttl em{color:var(--gold);font-style:italic;display:block}
-.cap-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 44px;line-height:1.8;position:relative}
-.cap-form{display:flex;gap:0;max-width:480px;margin:0 auto 12px;position:relative}
-.cap-email{flex:1;background:var(--mid);border:1px solid rgba(201,168,76,.25);border-right:none;color:var(--white);padding:17px 22px;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s}
-.cap-email:focus{border-color:var(--gold)}
-.cap-email::placeholder{color:var(--muted)}
-.cap-go{background:var(--gold);color:#000;border:none;padding:17px 36px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .2s;white-space:nowrap}
-.cap-go:hover{background:var(--gl)}
-.cap-go:disabled{opacity:.6;cursor:wait}
-.cap-fine{font-size:11px;color:rgba(110,107,100,.6)}
-.cap-ok{display:none;padding:28px 40px;background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.25);max-width:480px;margin:0 auto;position:relative}
-.cap-ok-ttl{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--green);margin-bottom:6px}
-.cap-ok-body{font-size:13px;color:var(--muted)}
-
-/* COLLECTION SECTION */
-.coll-s{padding:96px 72px;border-bottom:1px solid var(--border)}
-.s-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.s-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,60px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:56px}
-.s-ttl em{color:var(--gold);font-style:italic}
-
-/* Phase badge */
-.phase{display:inline-block;padding:5px 14px;background:rgba(201,168,76,.1);border:1px solid var(--border);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:40px}
-
-/* Timeline */
-.tline{position:relative;padding-left:32px;margin-bottom:64px}
+.pvis{position:relative;overflow:hidden;min-height:580px;background:#000}
+.pvis img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform 8s ease}
+.pvis:hover img{transform:scale(1.03)}
+.ptag{position:absolute;top:24px;left:24px;background:rgba(201,168,76,.92);color:#000;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;z-index:2}
+.pwip{position:absolute;bottom:24px;right:24px;background:rgba(0,0,0,.85);border:1px solid var(--border);color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px}
+.pinfo{background:var(--mid);padding:72px 60px;display:flex;flex-direction:column;justify-content:center}
+.peye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.pttl{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:18px}
+.pttl em{color:var(--gold);font-style:italic;display:block}
+.pdesc{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:32px}
+.pspecs{display:flex;flex-direction:column;gap:1px;margin-bottom:32px}
+.pspec{display:flex;gap:16px;padding:13px 18px;background:rgba(0,0,0,.45)}
+.psl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);width:78px;flex-shrink:0;margin-top:2px}
+.psv{font-size:13px;color:var(--text);line-height:1.5}
+.pprice{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--gl);margin-bottom:4px}
+.pnote{font-size:12px;color:var(--muted);margin-bottom:28px}
+.capture{padding:112px 72px;text-align:center;background:linear-gradient(180deg,var(--black) 0%,#090600 50%,var(--black) 100%);position:relative;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.capture::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(201,168,76,.05) 0%,transparent 65%);border-radius:50%}
+.ceye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;position:relative}
+.cttl{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,9vw,100px);font-weight:300;color:var(--white);line-height:.9;margin-bottom:16px;position:relative;letter-spacing:-2px}
+.cttl em{color:var(--gold);font-style:italic;display:block}
+.csub{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 44px;line-height:1.8;position:relative}
+.cform{display:flex;max-width:480px;margin:0 auto 12px;position:relative}
+.cemail{flex:1;background:var(--mid);border:1px solid rgba(201,168,76,.22);border-right:none;color:var(--white);padding:17px 22px;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s}
+.cemail:focus{border-color:var(--gold)}.cemail::placeholder{color:var(--muted)}
+.cbtn{background:var(--gold);color:#000;border:none;padding:17px 36px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .2s}
+.cbtn:hover{background:var(--gl)}
+.cfine{font-size:11px;color:rgba(106,103,96,.6)}
+.cok{display:none;padding:28px 40px;background:rgba(46,204,113,.07);border:1px solid rgba(46,204,113,.25);max-width:480px;margin:0 auto;position:relative}
+.cokh{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--green);margin-bottom:6px}
+.cokb{font-size:13px;color:var(--muted)}
+.bsec{padding:96px 72px;border-bottom:1px solid var(--border)}
+.seye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.sttl{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5.5vw,64px);font-weight:300;color:var(--white);line-height:1.0;margin-bottom:16px}
+.sttl em{color:var(--gold);font-style:italic}
+.sintr{font-size:15px;color:var(--muted);max-width:680px;line-height:1.8;margin-bottom:48px}
+.invbar{background:var(--dark);border:1px solid var(--border);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+.invl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.invc{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--gl);line-height:1}
+.invs{font-size:12px;color:var(--muted)}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.bc{background:var(--dark);padding:32px 24px;position:relative;overflow:hidden}
+.bc.feat{background:linear-gradient(135deg,#0D0900,var(--dark));border:1px solid rgba(201,168,76,.2)}
+.bcn{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(201,168,76,.06);line-height:1;margin-bottom:-10px}
+.bcf{font-size:28px;margin-bottom:10px;display:block}
+.bcnat{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.bcname{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.2}
+.bcname em{color:var(--gold);font-style:italic}
+.bcc{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.bcq{font-size:28px;font-family:'Cormorant Garamond',serif;color:var(--gold)}
+.bcql{font-size:11px;color:var(--muted)}
+.bcp{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gl);margin-bottom:4px}
+.bcr{font-size:11px;color:var(--muted)}
+.bcbadge{display:inline-block;padding:3px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--gold)}
+.bcbadge.can{background:rgba(220,50,50,.08);border-color:rgba(220,50,50,.2);color:#E54}
+.bcbadge.rar{background:rgba(232,201,122,.15);border-color:rgba(232,201,122,.4);color:var(--gl)}
+.rsum{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:32px}
+.rs{background:var(--dark);padding:28px 24px;text-align:center}
+.rsv{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gl);margin-bottom:4px}
+.rsl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.rs.hl{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.25)}
+.balls-s{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+.bvis{background:var(--dark);padding:72px 64px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.bvis::before{content:'\26BD';position:absolute;right:-30px;top:50%;transform:translateY(-50%);font-size:260px;opacity:.04;line-height:1}
+.bstat-v{font-family:'Cormorant Garamond',serif;font-size:64px;color:var(--gold);line-height:1}
+.bstat-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;margin-bottom:32px}
+.btiers{display:flex;flex-direction:column;gap:1px;margin-top:8px}
+.btier{display:flex;gap:16px;padding:16px 20px;background:rgba(0,0,0,.4);align-items:center}
+.btl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);width:100px;flex-shrink:0}
+.btv{font-size:13px;color:var(--text)}
+.btp{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gl);margin-left:auto}
+.bpitch{background:var(--mid);padding:72px 60px;display:flex;flex-direction:column;justify-content:center}
+.bintr{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:32px}
+.stargs{display:flex;flex-direction:column;gap:1px;margin-bottom:32px}
+.st{display:flex;gap:16px;padding:16px 20px;background:rgba(0,0,0,.4);border-left:2px solid transparent;transition:border-color .2s}
+.st:hover{border-left-color:var(--gold)}
+.sti{font-size:24px;flex-shrink:0;width:40px;text-align:center}
+.stn{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px}
+.std{font-size:12px;color:var(--muted)}
+.tl-s{padding:96px 72px;border-bottom:1px solid var(--border)}
+.tline{position:relative;padding-left:32px;margin-top:48px}
 .tline::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(201,168,76,.1))}
 .ti{position:relative;margin-bottom:40px}
-.ti-dot{position:absolute;left:-36px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--black)}
-.ti-dot.f{background:var(--dark);border-color:var(--muted)}
-.ti-dot.h{background:var(--gl);box-shadow:0 0 12px rgba(232,201,122,.6);border:2px solid var(--black)}
-.ti-d{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
-.ti-t{font-size:17px;font-weight:600;color:var(--white);margin-bottom:6px}
-.ti-b{font-size:13px;color:var(--muted);line-height:1.7;max-width:560px}
-.ti-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.ti-tag{padding:3px 11px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
-
-/* Drop cards */
-.drops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.dc{background:var(--dark);padding:32px 28px;position:relative;overflow:hidden}
-.dc.dim{opacity:.45}
-.dc.featured{grid-column:span 3;background:linear-gradient(135deg,#120C00,var(--dark));border:1px solid rgba(201,168,76,.25);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:48px}
-.dcn{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:rgba(201,168,76,.06);line-height:1;margin-bottom:-12px}
-.dc-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;background:rgba(201,168,76,.1);border:1px solid var(--border);color:var(--gold)}
-.dc-badge::before{content:'◆';font-size:6px}
-.dc-badge.auc{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:var(--gl)}
-.dc-nation{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.dc-name{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.8vw,30px);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:10px}
-.dc-name em{color:var(--gold);font-style:italic}
-.dc-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;max-width:340px}
-.dc-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.dc-price{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gl)}
-.dc-ed{font-size:11px;color:var(--muted)}
-.dc-btn{padding:9px 22px;background:var(--gold);color:#000;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;font-family:'Space Grotesk',sans-serif;transition:background .2s;display:inline-block}
-.dc-btn:hover{background:var(--gl)}
-.dc-btn.g{background:transparent;border:1px solid var(--border);color:var(--muted);cursor:default}
-
-/* INTEL SECTION (Why Marchese framing) */
-.why-s{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
-.why-l{background:var(--dark);padding:80px 64px}
-.why-r{background:var(--mid);padding:80px 64px}
-.why-q{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.2vw,38px);font-style:italic;font-weight:300;color:var(--white);line-height:1.35;margin-bottom:24px}
-.why-q em{color:var(--gold)}
-.why-attr{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:40px;display:block}
-.why-body{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:20px}
-.why-facts{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:40px}
-.wf{background:rgba(0,0,0,.4);padding:24px 20px;text-align:center}
-.wf-v{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gl);margin-bottom:4px}
-.wf-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.diff{padding:18px 22px;background:rgba(0,0,0,.4);border-left:2px solid var(--gold);margin-bottom:10px}
-.diff-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.diff-v{font-size:13px;color:var(--text)}
-
-/* NATIONS */
+.tidot{position:absolute;left:-36px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--black)}
+.tidot.f{background:var(--dark);border-color:var(--muted)}
+.tidot.h{background:var(--gl);border:2px solid var(--black);box-shadow:0 0 12px rgba(232,201,122,.5)}
+.tid{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.tit{font-size:17px;font-weight:600;color:var(--white);margin-bottom:6px}
+.tib{font-size:13px;color:var(--muted);line-height:1.7;max-width:580px}
+.titags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.titag{padding:3px 11px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
 .nations-s{padding:80px 72px;border-bottom:1px solid var(--border)}
-.nations-scroll{display:flex;gap:2px;overflow-x:auto;margin-top:48px;padding-bottom:4px}
-.nc{background:var(--dark);padding:28px 24px;min-width:175px;flex-shrink:0;text-align:center;border-bottom:2px solid transparent;transition:all .2s}
+.nscroll{display:flex;gap:2px;overflow-x:auto;margin-top:40px;padding-bottom:4px}
+.nc{background:var(--dark);padding:28px 24px;min-width:175px;flex-shrink:0;text-align:center;border-bottom:2px solid transparent;transition:all .2s;cursor:default}
 .nc:hover{background:var(--mid);border-bottom-color:var(--gold)}
-.nc.feat{border-bottom-color:rgba(201,168,76,.4);background:linear-gradient(180deg,rgba(201,168,76,.04),var(--dark))}
-.nc-flag{font-size:30px;margin-bottom:10px;display:block}
-.nc-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px}
-.nc-match{font-size:11px;color:var(--muted)}
-
-/* EXPANSION */
-.exp-s{padding:80px 72px;border-bottom:1px solid var(--border)}
-.exp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:48px}
-.ec{background:var(--dark);padding:40px 32px}
-.ec-icon{font-size:40px;margin-bottom:20px;display:block}
-.ec-eye{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.ec-t{font-size:20px;font-weight:600;color:var(--white);margin-bottom:12px}
-.ec-b{font-size:13px;color:var(--muted);line-height:1.75}
-.ec-soon{display:inline-block;margin-top:16px;padding:4px 12px;border:1px solid var(--border);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-
-/* LIST BUILDING */
-.list-s{padding:80px 72px;border-bottom:1px solid var(--border);background:var(--dark)}
-.list-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px}
-.list-card{background:var(--mid);padding:32px 24px}
-.list-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(201,168,76,.15);line-height:1;margin-bottom:8px}
-.list-icon{font-size:28px;margin-bottom:12px;display:block}
-.list-t{font-size:15px;font-weight:600;color:var(--white);margin-bottom:8px}
-.list-b{font-size:13px;color:var(--muted);line-height:1.7}
-.list-target{font-size:11px;color:var(--gold);letter-spacing:1px;margin-top:12px;display:block}
-
-/* FINAL */
+.nc.feat{border-bottom-color:rgba(201,168,76,.35);background:linear-gradient(180deg,rgba(201,168,76,.04),var(--dark))}
+.ncf{font-size:30px;margin-bottom:10px;display:block}
+.ncn{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px}
+.ncm{font-size:11px;color:var(--muted)}
 .final-s{padding:112px 72px;text-align:center}
-.final-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,9vw,112px);font-weight:300;color:var(--white);line-height:.92;margin-bottom:16px;letter-spacing:-2px}
-.final-ttl em{color:var(--gold);font-style:italic;display:block}
-.final-sub{font-size:15px;color:var(--muted);margin-bottom:48px}
-.final-form{display:flex;gap:0;max-width:460px;margin:0 auto 12px}
-.final-email{flex:1;background:var(--mid);border:1px solid rgba(201,168,76,.2);border-right:none;color:var(--white);padding:17px 20px;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none}
-.final-email:focus{border-color:var(--gold)}
-.final-email::placeholder{color:var(--muted)}
-.final-sub-btn{background:var(--gold);color:#000;border:none;padding:17px 32px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .2s}
-.final-sub-btn:hover{background:var(--gl)}
-.final-note{font-size:11px;color:rgba(110,107,100,.6)}
-.final-ok{display:none;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--green);margin-top:16px}
-
-/* FOOTER */
+.fttl{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,9vw,112px);font-weight:300;color:var(--white);line-height:.9;margin-bottom:16px;letter-spacing:-2px}
+.fttl em{color:var(--gold);font-style:italic;display:block}
+.fsub{font-size:15px;color:var(--muted);margin-bottom:48px}
+.fform{display:flex;max-width:460px;margin:0 auto 12px}
+.femail{flex:1;background:var(--mid);border:1px solid rgba(201,168,76,.18);border-right:none;color:var(--white);padding:17px 20px;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none}
+.femail:focus{border-color:var(--gold)}.femail::placeholder{color:var(--muted)}
+.fgo{background:var(--gold);color:#000;border:none;padding:17px 32px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .2s}
+.fgo:hover{background:var(--gl)}
+.fnote{font-size:11px;color:rgba(106,103,96,.55)}
+.fok{display:none;font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--green);margin-top:16px}
 footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 72px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
-.f-logo{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold)}
-.f-links{display:flex;gap:24px;list-style:none}
-.f-links a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.f-links a:hover{color:var(--gold)}
-.f-social{display:flex;gap:20px}
-.f-social a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.f-social a:hover{color:var(--gold)}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav,.hero,.cd-wrap,.piece-info,.capture,.coll-s,.nations-s,.exp-s,.list-s,.final-s,footer{padding-left:24px;padding-right:24px}
-  .hero{padding-bottom:72px}.hero-side{display:none}.nav-links{display:none}
-  .piece-s{grid-template-columns:1fr}.piece-img{min-height:360px}
-  .why-s{grid-template-columns:1fr}
-  .drops-grid{grid-template-columns:1fr}
-  .dc.featured{grid-column:span 1;grid-template-columns:1fr}
-  .exp-grid,.list-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){.exp-grid,.list-grid{grid-template-columns:1fr}.cap-form,.final-form{flex-direction:column}.cap-email,.final-email{border-right:1px solid rgba(201,168,76,.25);border-bottom:none}}
+.fl{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold)}
+.flinks{display:flex;gap:24px;list-style:none}
+.flinks a{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--gold)}
+.fsoc{display:flex;gap:20px}
+.fsoc a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.fsoc a:hover{color:var(--gold)}
+@media(max-width:900px){nav,.hero,.cd,.bsec,.tl-s,.nations-s,.final-s,footer{padding-left:24px;padding-right:24px}.hero{padding-bottom:72px}.hside,.nav-l{display:none}.piece-s,.balls-s{grid-template-columns:1fr}.pvis{min-height:340px}.bgrid{grid-template-columns:1fr 1fr}.rsum{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.bgrid{grid-template-columns:1fr}.cform,.fform{flex-direction:column}.cemail,.femail{border-right:1px solid rgba(201,168,76,.22);border-bottom:none}}
 </style>
 </head>
 <body>
+<div id="intro-overlay">
+<canvas id="ball-canvas-3d"></canvas>
+<div class="flash"></div>
+<div class="intro-txt">
+<div class="intro-sub">Art By Marchese x FIFA World Cup 2026</div>
+<div class="intro-main">The Beautiful<em>Game.</em></div>
+</div>
+<div class="intro-skip">Click anywhere to skip</div>
+</div>
 
-<div class="bar">⚽ FIFA World Cup 2026 — Toronto — June 12 &nbsp;|&nbsp; Limited Edition Drops Starting May 2026 &nbsp;|&nbsp; Get First Access Below ↓</div>
+<div class="bar">&#x26BD; FIFA 2026 Toronto &nbsp;|&nbsp; 40 Hand-Painted Diamond-Dust Decks &nbsp;|&nbsp; Drops May 15 &nbsp;|&nbsp; Get First Access &#x2193;</div>
 
 <nav id="nav">
-  <a href="https://artbymarchese.com" class="nav-logo">Chris <span>Marchese</span></a>
-  <ul class="nav-links">
-    <li><a href="#piece">The Piece</a></li>
-    <li><a href="#drops">The Drops</a></li>
-    <li><a href="#nations">Nations</a></li>
-    <li><a href="https://artbymarchese.com/pages/contact">Commission</a></li>
-  </ul>
-  <a href="#access" class="nav-btn">Get First Access</a>
+<a href="https://artbymarchese.com" class="logo">Chris <span>Marchese</span></a>
+<ul class="nav-l">
+<li><a href="#piece">The Piece</a></li>
+<li><a href="#boards">40 Boards</a></li>
+<li><a href="#balls">Art Balls</a></li>
+<li><a href="https://artbymarchese.com/pages/contact">Commission</a></li>
+</ul>
+<a href="#access" class="nav-cta">Get First Access</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="orb o1"></div><div class="orb o2"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-eye"><div class="dot"></div>Toronto — FIFA World Cup 2026 — Limited Edition Collection</div>
-    <h1 class="hero-h1">The Beautiful<em>Game.</em></h1>
-    <p class="hero-sub">Art By Marchese × the World Cup's arrival in Toronto. Diamond dust. Canadian maple. One city. Drops starting May 2026.</p>
-    <div class="hero-btns">
-      <a href="#access" class="btn-g">Get First Access</a>
-      <a href="#drops" class="btn-o">See the Collection</a>
-    </div>
-  </div>
-  <div class="hero-side">
-    <div><div class="hs-v">6</div><div class="hs-l">Matches in Toronto</div></div>
-    <div><div class="hs-v">$23K</div><div class="hs-l">Highest Original Sale</div></div>
-    <div><div class="hs-v">0</div><div class="hs-l">Reprints. Ever.</div></div>
-  </div>
-  <div class="scroll-h"><div class="scroll-l"></div>Scroll</div>
+<div class="hbg"></div><div class="orb o1"></div><div class="orb o2"></div><div class="hgrid"></div>
+<div class="hc">
+<div class="heye"><div class="pdot"></div>Toronto &mdash; FIFA World Cup 2026 &mdash; Limited Edition</div>
+<h1 class="ht1">The Beautiful<em>Game.</em></h1>
+<p class="hsub">40 hand-painted diamond-dust decks. 7 nations. One city. Made in Canada. Drops May 15, 2026.</p>
+<div class="hbtns"><a href="#access" class="btn-g">Get First Access</a><a href="#boards" class="btn-o">See the 40 Boards</a></div>
+</div>
+<div class="hside">
+<div><div class="hsv">40</div><div class="hsl">Boards Total</div></div>
+<div><div class="hsv">7</div><div class="hsl">Nations</div></div>
+<div><div class="hsv">0</div><div class="hsl">Reprints Ever</div></div>
+</div>
+<div class="si"><div class="sl"></div>Scroll</div>
 </section>
 
-<!-- COUNTDOWN -->
-<section class="cd-wrap">
-  <div class="cd-inner">
-    <div>
-      <div class="cd-eye">Countdown — Opening Day</div>
-      <div class="cd-ttl">Canada vs. Bosnia &amp; Herzegovina.<br>June 12, 2026 — 3pm EST.</div>
-      <div class="cd-sub">Canada's first-ever men's World Cup match on <span>Canadian soil.</span></div>
-    </div>
-    <div class="timer">
-      <div class="tu"><span class="tn" id="cd-d">68</span><div class="tl">Days</div></div>
-      <span class="tc">:</span>
-      <div class="tu"><span class="tn" id="cd-h">00</span><div class="tl">Hours</div></div>
-      <span class="tc">:</span>
-      <div class="tu"><span class="tn" id="cd-m">00</span><div class="tl">Minutes</div></div>
-      <span class="tc">:</span>
-      <div class="tu"><span class="tn" id="cd-s">00</span><div class="tl">Seconds</div></div>
-    </div>
-  </div>
+<section class="cd">
+<div class="cdi">
+<div>
+<div class="cdlabel">Opening Day Countdown</div>
+<div class="cdttl">Canada vs Bosnia &amp; Herz.<br>June 12, 2026 &mdash; 3pm EST.</div>
+<div class="cdsub">Canada's first <span>home</span> World Cup game. Ever.</div>
+</div>
+<div class="timer">
+<div class="tu"><span class="tn" id="cd-d">68</span><div class="tl">Days</div></div>
+<span class="tc">:</span>
+<div class="tu"><span class="tn" id="cd-h">00</span><div class="tl">Hours</div></div>
+<span class="tc">:</span>
+<div class="tu"><span class="tn" id="cd-m">00</span><div class="tl">Min</div></div>
+<span class="tc">:</span>
+<div class="tu"><span class="tn" id="cd-s">00</span><div class="tl">Sec</div></div>
+</div>
+</div>
 </section>
 
-<!-- THE MARQUEE PIECE -->
 <section class="piece-s" id="piece">
-  <div class="piece-img">
-    <img src="piece-wip.jpg" alt="The Beautiful Game — Work in Progress by Chris Marchese" onerror="this.parentNode.style.background='linear-gradient(135deg,#1A1400,#0D0B00)';this.style.display='none'">
-    <div class="piece-tag">Marquee Piece — Work in Progress</div>
-    <div class="piece-wip">⚒ In Studio</div>
-  </div>
-  <div class="piece-info">
-    <div class="p-eye">Anchor Piece — The Beautiful Game Collection</div>
-    <h2 class="p-ttl">Where Pop Art Meets<em>The Pitch.</em></h2>
-    <p class="p-desc">Pop culture icon. Gold dollar-sign ball. Toronto's CN Tower. The world's flags. $100 bill background. Diamond dust on every detail. Hand-painted in Canada. This is the statement piece of the entire collection — unveiled live at Fort York Fan Festival on Canada's opening match day.</p>
-    <div class="p-specs">
-      <div class="p-spec"><div class="p-sl">Medium</div><div class="p-sv">Acrylic on gallery-wrapped canvas, sealed in high-gloss resin with diamond dust</div></div>
-      <div class="p-spec"><div class="p-sl">Reveal</div><div class="p-sv">June 12, 2026 — Live at Fort York Fan Festival, Toronto</div></div>
-      <div class="p-spec"><div class="p-sl">Auction</div><div class="p-sv">Open bidding June 12 → July 2 (Toronto's final match day)</div></div>
-      <div class="p-spec"><div class="p-sl">Edition</div><div class="p-sv">1 of 1. Original. Certificate of authenticity.</div></div>
-    </div>
-    <div class="p-price">$15,000+</div>
-    <div class="p-pnote">Opening bid. Live auction. Closes July 2.</div>
-    <a href="#access" class="btn-g" style="display:inline-block;max-width:280px;">Register for Auction Access →</a>
-  </div>
+<div class="pvis">
+<img src="piece-wip.jpg" alt="The Beautiful Game by Chris Marchese" onerror="this.style.display='none';this.parentNode.style.background='radial-gradient(ellipse at center,#1A1200,#050505)'">
+<div class="ptag">Marquee Canvas &mdash; In Studio</div>
+<div class="pwip">&#x2692; Work In Progress</div>
+</div>
+<div class="pinfo">
+<div class="peye">The Anchor Piece &mdash; Fort York Auction &mdash; June 12</div>
+<h2 class="pttl">Where Pop Art Meets<em>The Pitch.</em></h2>
+<p class="pdesc">Pop culture icon kicking a gold dollar-sign soccer ball. The CN Tower behind him. $100 bills to the sky. The world&#x27;s flags. Diamond dust on every detail. Hand-painted in Canada. Unveiled live at Fort York Fan Festival on opening day. Auctioned publicly. One piece. One buyer.</p>
+<div class="pspecs">
+<div class="pspec"><div class="psl">Medium</div><div class="psv">Acrylic on gallery canvas, high-gloss resin, diamond dust</div></div>
+<div class="pspec"><div class="psl">Reveal</div><div class="psv">June 12 &mdash; Live at Fort York Fan Festival, Toronto</div></div>
+<div class="pspec"><div class="psl">Auction</div><div class="psv">June 12 &rarr; July 2. Open bidding.</div></div>
+<div class="pspec"><div class="psl">Edition</div><div class="psv">1 of 1. Certificate of authenticity.</div></div>
+</div>
+<div class="pprice">$15,000+</div>
+<div class="pnote">Opening bid. Live auction. Closes July 2 &mdash; Toronto&#x27;s final match.</div>
+<a href="#access" class="btn-g" style="display:inline-block;max-width:280px">Register for Auction &rarr;</a>
+</div>
 </section>
 
-<!-- EMAIL CAPTURE -->
 <section class="capture" id="access">
-  <div class="cap-eye">Limited Drops — Starting May 15, 2026</div>
-  <h2 class="cap-ttl">First Access.<em>No Exceptions.</em></h2>
-  <p class="cap-sub">Join the collector list. Every drop announced to the list 24 hours before the public. When an edition closes, it's gone permanently. No reprints. Ever.</p>
-  <form class="cap-form" id="main-form">
-    <input type="email" class="cap-email" id="main-email" placeholder="your@email.com" required>
-    <button type="submit" class="cap-go" id="main-btn">Join the List</button>
-  </form>
-  <p class="cap-fine">No spam. One email per drop. Unsubscribe anytime.</p>
-  <div class="cap-ok" id="main-ok">
-    <div class="cap-ok-ttl">You're in. 🖤</div>
-    <div class="cap-ok-body">Watch your inbox. First drop lands May 15. Welcome to the collector list.</div>
-  </div>
+<div class="ceye">40 Boards. Drops May 15.</div>
+<h2 class="cttl">First Access.<em>No Reprints.</em></h2>
+<p class="csub">Join the collector list. Every drop announced 24 hours before the public. When an edition sells out, it is gone permanently. These 40 boards are all there is.</p>
+<form class="cform" id="main-form">
+<input type="email" class="cemail" id="main-email" placeholder="your@email.com" required>
+<button type="submit" class="cbtn" id="main-btn">Join the List</button>
+</form>
+<p class="cfine">No spam. One email per drop. Unsubscribe anytime.</p>
+<div class="cok" id="main-ok"><div class="cokh">You&#x27;re in. &#x1F5A4;</div><div class="cokb">Watch your inbox. First drop May 15. Welcome to the collector list.</div></div>
 </section>
 
-<!-- COLLECTION + TIMELINE -->
-<section class="coll-s" id="drops">
-  <div class="s-eye">The Campaign</div>
-  <h2 class="s-ttl">Drops Starting<em>May 2026.</em></h2>
-
-  <span class="phase">Revised Campaign Timeline</span>
-
-  <div class="tline">
-    <div class="ti">
-      <div class="ti-dot"></div>
-      <div class="ti-d">Now → May 12 — Anticipation Phase</div>
-      <div class="ti-t">Building. No Drops Yet.</div>
-      <div class="ti-b">Pure heat. Studio content, behind-the-scenes on the marquee piece, teaser reveals. Goal: 1,000 collectors on the list before the first drop lands May 15.</div>
-      <div class="ti-tags"><span class="ti-tag">Content</span><span class="ti-tag">List Growth</span><span class="ti-tag">Studio BTS</span><span class="ti-tag">PR Push</span></div>
-    </div>
-    <div class="ti">
-      <div class="ti-dot"></div>
-      <div class="ti-d">May 12 — Collection Announcement</div>
-      <div class="ti-t">All Drops Revealed Simultaneously</div>
-      <div class="ti-b">Full collection announced. Drop schedule locked. PR articles land this week. Four-week countdown begins. The city starts paying attention.</div>
-      <div class="ti-tags"><span class="ti-tag">Launch</span><span class="ti-tag">Media Coverage</span><span class="ti-tag">Full Reveal</span></div>
-    </div>
-    <div class="ti">
-      <div class="ti-dot"></div>
-      <div class="ti-d">May 15 → June 12 — Four Weekly Drops</div>
-      <div class="ti-t">One Drop Per Week. Building to Opening Day.</div>
-      <div class="ti-b">Canada. Germany. Ghana. Croatia. Four nations. Four drops. List gets 24 hours before the public. Editions close permanently.</div>
-      <div class="ti-tags"><span class="ti-tag">May 15</span><span class="ti-tag">May 22</span><span class="ti-tag">May 29</span><span class="ti-tag">June 5</span></div>
-    </div>
-    <div class="ti">
-      <div class="ti-dot h"></div>
-      <div class="ti-d" style="color:var(--gl);font-size:12px;">June 12 — OPENING DAY 🏆</div>
-      <div class="ti-t" style="font-size:20px;">Fort York Fan Festival — Live Activation</div>
-      <div class="ti-b">Chris paints live. Marquee canvas unveiled. Auction opens. Canada plays their first-ever home World Cup game against Bosnia. The city erupts.</div>
-      <div class="ti-tags"><span class="ti-tag">Fort York</span><span class="ti-tag">Live Painting</span><span class="ti-tag">Auction Opens</span><span class="ti-tag">Marquee Reveal</span></div>
-    </div>
-    <div class="ti">
-      <div class="ti-dot f"></div>
-      <div class="ti-d">June 17 → July 2 — Tournament Drops Continue</div>
-      <div class="ti-t">Drops on Every Matchday</div>
-      <div class="ti-b">Germany (Jun 20). Ghana (Jun 17). Croatia (Jun 23). Senegal (Jun 26). Round of 32 (Jul 2). Art balls. Fashion. The city stays lit for 21 days — so do the drops.</div>
-      <div class="ti-tags"><span class="ti-tag">Matchday Drops</span><span class="ti-tag">Art Balls</span><span class="ti-tag">Fashion Art</span><span class="ti-tag">Nation Pieces</span></div>
-    </div>
-  </div>
-
-  <!-- DROP CARDS -->
-  <div class="drops-grid">
-    <div class="dc">
-      <div class="dcn">01</div>
-      <span class="dc-badge">Drop 1 — May 15</span>
-      <div class="dc-nation">🍁 Canada — June 12</div>
-      <div class="dc-name">"Home <em>Soil</em>"</div>
-      <p class="dc-desc">Canada's first-ever home World Cup game. Maple leaf. Diamond dust. Luxury codes. Made for this exact moment. Edition of 25.</p>
-      <div class="dc-footer"><div><div class="dc-price">$450</div><div class="dc-ed">Edition of 25 — No Restocks</div></div><a href="#access" class="dc-btn">Get Notified</a></div>
-    </div>
-    <div class="dc">
-      <div class="dcn">02</div>
-      <span class="dc-badge">Drop 2 — May 22</span>
-      <div class="dc-nation">🇩🇪 Germany — June 20</div>
-      <div class="dc-name">"Der <em>Meister</em>"</div>
-      <p class="dc-desc">German engineering meets haute couture. Precision on every layer. Germany plays Ivory Coast in Toronto June 20. Edition of 30.</p>
-      <div class="dc-footer"><div><div class="dc-price">$399</div><div class="dc-ed">Edition of 30</div></div><a href="#access" class="dc-btn">Get Notified</a></div>
-    </div>
-    <div class="dc">
-      <div class="dcn">03</div>
-      <span class="dc-badge">Drop 3 — May 29</span>
-      <div class="dc-nation">🇬🇭 Ghana — June 17</div>
-      <div class="dc-name">"Gold <em>Coast</em>"</div>
-      <p class="dc-desc">For the diaspora that doesn't choose. Kente-inspired colourways. Diamond dust. Luxury codes. Ghana plays Toronto June 17. Edition of 25.</p>
-      <div class="dc-footer"><div><div class="dc-price">$399</div><div class="dc-ed">Edition of 25</div></div><a href="#access" class="dc-btn">Get Notified</a></div>
-    </div>
-    <div class="dc">
-      <div class="dcn">04</div>
-      <span class="dc-badge">Drop 4 — June 5</span>
-      <div class="dc-nation">🇭🇷 Croatia — June 23</div>
-      <div class="dc-name">"Adriatic <em>Blue</em>"</div>
-      <p class="dc-desc">The checkerboard was always luxury. Croatia × Dior visual codes. Deep blues. Diamond dust. Edition of 30.</p>
-      <div class="dc-footer"><div><div class="dc-price">$399</div><div class="dc-ed">Edition of 30</div></div><a href="#access" class="dc-btn">Get Notified</a></div>
-    </div>
-    <div class="dc dim">
-      <div class="dcn">05–09</div>
-      <span class="dc-badge">During Tournament</span>
-      <div class="dc-nation">⚽ 5 More Drops</div>
-      <div class="dc-name">"During <em>The Game</em>"</div>
-      <p class="dc-desc">Senegal. Panama. Bosnia. Art balls. Fashion pieces. Five more drops through July 2. Energy peaks in the tournament. So do the drops.</p>
-      <div class="dc-footer"><div><div class="dc-price">TBA</div><div class="dc-ed">Subscribers Only</div></div><a href="#access" class="dc-btn g">Join List to Access</a></div>
-    </div>
-    <!-- MARQUEE FEATURED -->
-    <div class="dc featured">
-      <div>
-        <span class="dc-badge auc">🏆 Marquee Auction — June 12</span>
-        <div class="dc-name" style="font-size:clamp(28px,4.5vw,48px);">"The Beautiful<br><em>Game" Canvas</em></div>
-        <p class="dc-desc" style="font-size:15px;max-width:100%;">The centrepiece. Pop culture icon. CN Tower. Gold ball. Diamond dust. Unveiled live at Fort York June 12. Auctioned publicly. One piece. One buyer. For keeps.</p>
-        <a href="#access" class="dc-btn" style="display:inline-block;">Register for Auction →</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:1px;">
-        <div class="p-spec" style="padding:13px 18px;"><div class="p-sl">Opening bid</div><div class="p-sv" style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gl);">$15,000</div></div>
-        <div class="p-spec" style="padding:13px 18px;"><div class="p-sl">Reveal</div><div class="p-sv">June 12 — Fort York Fan Festival</div></div>
-        <div class="p-spec" style="padding:13px 18px;"><div class="p-sl">Closes</div><div class="p-sv">July 2 — Toronto's final match</div></div>
-        <div class="p-spec" style="padding:13px 18px;"><div class="p-sl">Edition</div><div class="p-sv">1 of 1. Never reproduced.</div></div>
-      </div>
-    </div>
-  </div>
+<section class="bsec" id="boards">
+<div class="seye">The Product Strategy</div>
+<h2 class="sttl">40 Boards.<em>7 Nations.</em> That&#x27;s It.</h2>
+<p class="sintr">40 skateboards. 7 hand-painted nation designs. Every board is 7-ply Canadian maple, diamond dust finish, high-gloss resin, wall hanger included. When they&#x27;re gone, they&#x27;re gone. No reprints. 40 boards is the entire collection.</p>
+<div class="invbar">
+<div><div class="invl">Total Inventory</div><div class="invc">40</div><div class="invs">boards. Hand-painted by Chris Marchese.</div></div>
+<div style="flex:1;min-width:200px;"><div style="height:3px;background:rgba(255,255,255,.08);"><div style="height:100%;background:var(--gold);width:100%"></div></div><div style="display:flex;justify-content:space-between;margin-top:8px;"><span style="font-size:11px;color:var(--gold)">40 Available</span><span style="font-size:11px;color:var(--muted)">0 After Sold Out</span></div></div>
+<div style="text-align:right"><div class="invl">Revenue at Sell-Out</div><div class="invc" style="font-size:36px">~$17K</div></div>
+</div>
+<div class="bgrid">
+<div class="bc feat"><div class="bcn">01</div><span class="bcbadge can">Most Important</span><span class="bcf">&#x1F341;</span><div class="bcnat">Canada &mdash; June 12</div><div class="bcname">"Home <em>Soil</em>"</div><div class="bcc"><div class="bcq">8</div><div class="bcql">boards</div></div><div class="bcp">$450</div><div class="bcr">= $3,600 at sell-out</div></div>
+<div class="bc"><div class="bcn">02</div><span class="bcbadge">Germany x Luxury</span><span class="bcf">&#x1F1E9;&#x1F1EA;</span><div class="bcnat">Germany &mdash; June 20</div><div class="bcname">"Der <em>Meister</em>"</div><div class="bcc"><div class="bcq">6</div><div class="bcql">boards</div></div><div class="bcp">$399</div><div class="bcr">= $2,394 at sell-out</div></div>
+<div class="bc"><div class="bcn">03</div><span class="bcbadge">Ghana x Culture</span><span class="bcf">&#x1F1EC;&#x1F1ED;</span><div class="bcnat">Ghana &mdash; June 17</div><div class="bcname">"Gold <em>Coast</em>"</div><div class="bcc"><div class="bcq">6</div><div class="bcql">boards</div></div><div class="bcp">$399</div><div class="bcr">= $2,394 at sell-out</div></div>
+<div class="bc"><div class="bcn">04</div><span class="bcbadge">Croatia x Dior</span><span class="bcf">&#x1F1ED;&#x1F1F7;</span><div class="bcnat">Croatia &mdash; June 23</div><div class="bcname">"Adriatic <em>Blue</em>"</div><div class="bcc"><div class="bcq">5</div><div class="bcql">boards</div></div><div class="bcp">$399</div><div class="bcr">= $1,995 at sell-out</div></div>
+<div class="bc"><div class="bcn">05</div><span class="bcbadge">Senegal x Pride</span><span class="bcf">&#x1F1F8;&#x1F1F3;</span><div class="bcnat">Senegal &mdash; June 26</div><div class="bcname">"The <em>Lions</em>"</div><div class="bcc"><div class="bcq">5</div><div class="bcql">boards</div></div><div class="bcp">$399</div><div class="bcr">= $1,995 at sell-out</div></div>
+<div class="bc feat"><div class="bcn">06</div><span class="bcbadge">They Beat Italy</span><span class="bcf">&#x1F1E7;&#x1F1E6;</span><div class="bcnat">Bosnia &mdash; June 12 vs Canada</div><div class="bcname">"The <em>Underdog</em>"</div><div class="bcc"><div class="bcq">5</div><div class="bcql">boards</div></div><div class="bcp">$399</div><div class="bcr">Huge underdog narrative.</div></div>
+<div class="bc" style="background:linear-gradient(135deg,#0D0900,var(--dark));border:1px solid rgba(201,168,76,.2)"><div class="bcn">07</div><span class="bcbadge rar">Rarest &mdash; Ed. 5</span><span class="bcf">&#x26BD;</span><div class="bcnat">Tournament Edition</div><div class="bcname">"Beautiful <em>Game</em>"</div><div class="bcc"><div class="bcq">5</div><div class="bcql">boards</div></div><div class="bcp">$499</div><div class="bcr">= $2,495 &mdash; The Rarest</div></div>
+<div class="bc" style="opacity:.3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center"><span style="font-size:40px;margin-bottom:12px">&#x1F512;</span><div style="font-size:13px;color:var(--muted)">Join the list to see all designs first</div><a href="#access" style="margin-top:16px;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:2px;text-transform:uppercase">Get Access &rarr;</a></div>
+</div>
+<div class="rsum">
+<div class="rs"><div class="rsv">40</div><div class="rsl">Total Boards</div></div>
+<div class="rs"><div class="rsv">~3hr</div><div class="rsl">Per Board</div></div>
+<div class="rs"><div class="rsv">~$60</div><div class="rsl">Material Cost</div></div>
+<div class="rs hl"><div class="rsv">~$17K</div><div class="rsl">Revenue at Sell-Out</div></div>
+</div>
+<div style="background:var(--dark);border:1px solid var(--border);padding:32px 40px;margin-top:2px;display:grid;grid-template-columns:1fr 1fr;gap:32px">
+<div><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Production Reality</div><div style="font-size:13px;color:var(--muted);line-height:1.85">40 boards x 3hrs each = <strong style="color:var(--text)">120 hours</strong> total.<br>Now to May 15 = 6 weeks = <strong style="color:var(--text)">20hrs/week</strong>.<br>Material cost: <strong style="color:var(--text)">~$2,400&ndash;$3,000</strong> total.<br>Net at sell-out: <strong style="color:var(--gold)">$13,000&ndash;$15,000</strong>.</div></div>
+<div><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Why Only Skateboards</div><div style="font-size:13px;color:var(--muted);line-height:1.85">40 boards = defined, sellable inventory.<br>Prints dilute value and scarcity.<br>Canvases = marquee tier (auction only).<br>Balls = sponsorship play, not production time.<br><strong style="color:var(--text)">One medium. Maximum impact.</strong></div></div>
+</div>
 </section>
 
-<!-- WHY MARCHESE -->
-<section class="why-s">
-  <div class="why-l">
-    <div class="s-eye">The Artist</div>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--white);margin-bottom:32px;line-height:1.1;">Chris<br><em style="color:var(--gold);font-style:italic;">Marchese</em></h2>
-    <p class="why-body">Toronto-based visual artist working at the intersection of luxury fashion codes, anime culture, and 3D mixed media. Pieces sealed in real diamond dust and high-gloss resin. Sold from $299 to $23,000. Hand-made — no studio assistants, no outsourced production. Every grain of diamond dust applied by hand while the resin is still tacky.</p>
-    <p class="why-body">The FIFA collection is his most ambitious work. Built for this city. Built for this moment.</p>
-    <div class="why-facts">
-      <div class="wf"><div class="wf-v">$23K</div><div class="wf-l">Highest Sale</div></div>
-      <div class="wf"><div class="wf-v">100%</div><div class="wf-l">Hand-Made</div></div>
-      <div class="wf"><div class="wf-v">0</div><div class="wf-l">Reprints</div></div>
-      <div class="wf"><div class="wf-v">🇨🇦</div><div class="wf-l">Made in Canada</div></div>
-    </div>
-  </div>
-  <div class="why-r">
-    <div class="why-q">"The diamond dust catches light <em>differently from every angle.</em> No photograph shows what it looks like in person."</div>
-    <span class="why-attr">— Chris Marchese</span>
-    <div class="diff"><div class="diff-l">The Medium</div><div class="diff-v">3D sculptural acrylic with real diamond dust. Museum-grade. Not flat art — structural depth that photographs can't replicate.</div></div>
-    <div class="diff"><div class="diff-l">The Aesthetic</div><div class="diff-v">Luxury fashion codes (Gucci, Dior, Bape) × anime culture × pop icon subjects. A visual language no one else is making.</div></div>
-    <div class="diff"><div class="diff-l">The Scarcity</div><div class="diff-v">Every edition is hard-limited. Sold-out means gone permanently. No reprints. No exceptions. Structural rarity, not manufactured.</div></div>
-    <div style="margin-top:28px;padding:24px;background:rgba(0,0,0,.4);border-left:2px solid var(--gold);">
-      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Commission a Custom Piece</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.7;">3 slots per month. Your concept. Diamond dust. Starting at $3,000.</div>
-      <a href="https://artbymarchese.com/pages/contact" style="color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;">Inquire →</a>
-    </div>
-  </div>
+<section class="balls-s" id="balls">
+<div class="bvis">
+<div class="seye">The Sponsorship Play</div>
+<h2 class="sttl" style="margin-bottom:24px">500 Art <em>Balls.</em></h2>
+<div class="bstat-v">500</div>
+<div class="bstat-l">Soccer balls &mdash; sponsor provides</div>
+<div class="btiers">
+<div class="btier"><div class="btl">Art Balls</div><div class="btv">50 hand-painted 1/1s &mdash; diamond dust</div><div class="btp">$200&ndash;350</div></div>
+<div class="btier"><div class="btl">Signed</div><div class="btv">200 hand-signed &mdash; limited edition</div><div class="btp">$80&ndash;120</div></div>
+<div class="btier"><div class="btl">Giveaway</div><div class="btv">250 branded &mdash; Fort York activation</div><div class="btp">Photo moments</div></div>
+<div class="btier"><div class="btl">Revenue</div><div class="btv">50 art + 200 signed = potential</div><div class="btp" style="color:var(--green)">$26K+</div></div>
+</div>
+</div>
+<div class="bpitch">
+<div class="seye">Sponsor Targets</div>
+<h2 class="sttl" style="font-size:clamp(28px,4vw,44px);margin-bottom:20px">Who Should<em>Sponsor This.</em></h2>
+<p class="bintr">You provide 500 balls, Chris paints and signs them, your brand is on every ball and in every marketing touchpoint through July 2. Your brand is at Fort York with 45,000+ FIFA fans. Worth $10K&ndash;25K in product for enormous exposure.</p>
+<div class="stargs">
+<div class="st"><div class="sti">&#x1F6D2;</div><div><div class="stn">Sport Chek / FGL Sports</div><div class="std">Canada&#x27;s biggest sporting goods chain. FIFA momentum. Perfect fit. Ask: 500 balls + marketing collab.</div></div></div>
+<div class="st"><div class="sti">&#x26BD;</div><div><div class="stn">Select Sport</div><div class="std">Danish ball brand known for artist collabs. No FIFA exclusivity restrictions. Most accessible tier-1 brand.</div></div></div>
+<div class="st"><div class="sti">&#x1F3EC;</div><div><div class="stn">Sporting Life Toronto</div><div class="std">Premium Toronto retailer. Luxury-adjacent audience. Natural fit for Marchese aesthetic.</div></div></div>
+<div class="st"><div class="sti">&#x1F985;</div><div><div class="stn">Peace Collective</div><div class="std">Canadian pride brand, FIFA adjacent, TFC partners. Fashion x soccer ball collab = their content.</div></div></div>
+</div>
+<a href="#access" class="btn-g" style="display:inline-block;max-width:260px;margin-top:8px">Join Collector List &rarr;</a>
+</div>
 </section>
 
-<!-- NATIONS -->
+<section class="tl-s">
+<div class="seye">The Campaign</div>
+<h2 class="sttl">April &rarr; <em>July 2.</em></h2>
+<div class="tline">
+<div class="ti"><div class="tidot"></div><div class="tid">Now &rarr; May 12 &mdash; Anticipation</div><div class="tit">Build the List. Build the Heat.</div><div class="tib">No drops yet. Studio content, the marquee piece in progress, teaser posts. Goal: 1,000 collectors before May 15.</div><div class="titags"><span class="titag">Studio BTS</span><span class="titag">List Growth</span><span class="titag">PR Push</span></div></div>
+<div class="ti"><div class="tidot"></div><div class="tid">May 12 &mdash; Full Collection Revealed</div><div class="tit">All 40 Boards. 3 Days to First Drop.</div><div class="tib">All 7 designs announced simultaneously. Press goes live. Email list gets it first.</div><div class="titags"><span class="titag">Launch</span><span class="titag">Media</span><span class="titag">Reveal</span></div></div>
+<div class="ti"><div class="tidot"></div><div class="tid">May 15 &rarr; June 12 &mdash; 4 Weekly Drops</div><div class="tit">Canada. Germany. Ghana. Croatia. One per week.</div><div class="tib">Drop email Thursday night. Goes public Friday noon. Edition closes permanently when sold.</div><div class="titags"><span class="titag">May 15</span><span class="titag">May 22</span><span class="titag">May 29</span><span class="titag">June 5</span></div></div>
+<div class="ti"><div class="tidot h"></div><div class="tid" style="color:var(--gl);font-size:12px">June 12 &mdash; OPENING DAY &#x1F3C6;</div><div class="tit" style="font-size:20px">Fort York. Live Painting. Auction Opens.</div><div class="tib">Chris paints live at the Fan Festival. Scrooge canvas unveiled. Auction opens. Canada plays Bosnia.</div><div class="titags"><span class="titag">Fort York</span><span class="titag">Live Paint</span><span class="titag">Auction Opens</span></div></div>
+<div class="ti"><div class="tidot f"></div><div class="tid">June 17 &rarr; July 2 &mdash; Tournament Drops</div><div class="tit">Senegal. Bosnia. Art Balls. Remaining boards.</div><div class="tib">Matchday drops continue. Art balls launch if sponsor secured. Auction closes July 2.</div><div class="titags"><span class="titag">Matchday Drops</span><span class="titag">Art Balls</span><span class="titag">Auction Closes Jul 2</span></div></div>
+</div>
+</section>
+
 <section class="nations-s" id="nations">
-  <div class="s-eye">Playing in Toronto</div>
-  <h2 class="s-ttl">48 Nations.<em>One City.</em></h2>
-  <div class="nations-scroll">
-    <div class="nc feat"><span class="nc-flag">🍁</span><div class="nc-name">Canada</div><div class="nc-match">June 12 — First Home Game</div></div>
-    <div class="nc feat"><span class="nc-flag">🇧🇦</span><div class="nc-name">Bosnia &amp; Herz.</div><div class="nc-match">June 12 vs Canada</div></div>
-    <div class="nc"><span class="nc-flag">🇩🇪</span><div class="nc-name">Germany</div><div class="nc-match">June 20 — Toronto</div></div>
-    <div class="nc"><span class="nc-flag">🇬🇭</span><div class="nc-name">Ghana</div><div class="nc-match">June 17 — Toronto</div></div>
-    <div class="nc"><span class="nc-flag">🇨🇮</span><div class="nc-name">Ivory Coast</div><div class="nc-match">June 20 — Toronto</div></div>
-    <div class="nc"><span class="nc-flag">🇭🇷</span><div class="nc-name">Croatia</div><div class="nc-match">June 23 — Toronto</div></div>
-    <div class="nc"><span class="nc-flag">🇵🇦</span><div class="nc-name">Panama</div><div class="nc-match">June 17 &amp; 23</div></div>
-    <div class="nc"><span class="nc-flag">🇸🇳</span><div class="nc-name">Senegal</div><div class="nc-match">June 26 — Toronto</div></div>
-    <div class="nc"><span class="nc-flag">⚽</span><div class="nc-name">Round of 32</div><div class="nc-match">July 2 — Toronto</div></div>
-  </div>
+<div class="seye">Playing in Toronto</div>
+<h2 class="sttl">48 Nations.<em>One City.</em></h2>
+<div class="nscroll">
+<div class="nc feat"><span class="ncf">&#x1F341;</span><div class="ncn">Canada</div><div class="ncm">June 12 &mdash; Home Opener</div></div>
+<div class="nc feat"><span class="ncf">&#x1F1E7;&#x1F1E6;</span><div class="ncn">Bosnia</div><div class="ncm">June 12 vs Canada</div></div>
+<div class="nc"><span class="ncf">&#x1F1E9;&#x1F1EA;</span><div class="ncn">Germany</div><div class="ncm">June 20</div></div>
+<div class="nc"><span class="ncf">&#x1F1EC;&#x1F1ED;</span><div class="ncn">Ghana</div><div class="ncm">June 17</div></div>
+<div class="nc"><span class="ncf">&#x1F1E8;&#x1F1EE;</span><div class="ncn">Ivory Coast</div><div class="ncm">June 20</div></div>
+<div class="nc"><span class="ncf">&#x1F1ED;&#x1F1F7;</span><div class="ncn">Croatia</div><div class="ncm">June 23</div></div>
+<div class="nc"><span class="ncf">&#x1F1F5;&#x1F1E6;</span><div class="ncn">Panama</div><div class="ncm">June 17 &amp; 23</div></div>
+<div class="nc"><span class="ncf">&#x1F1F8;&#x1F1F3;</span><div class="ncn">Senegal</div><div class="ncm">June 26</div></div>
+<div class="nc"><span class="ncf">&#x26BD;</span><div class="ncn">Round of 32</div><div class="ncm">July 2</div></div>
+</div>
 </section>
 
-<!-- BEYOND CANVAS -->
-<section class="exp-s">
-  <div class="s-eye">Beyond Canvas</div>
-  <h2 class="s-ttl">Art Doesn't Stop<em>at the Wall.</em></h2>
-  <div class="exp-grid">
-    <div class="ec"><span class="ec-icon">⚽</span><div class="ec-eye">Coming — FIFA Series</div><div class="ec-t">Art Balls</div><p class="ec-b">Hand-painted soccer balls. One design per nation playing Toronto. Diamond dust finish. Same Marchese medium — different surface. Limited to 10–25 per design. Priced as collectible art objects.</p><span class="ec-soon">Drops During Tournament</span></div>
-    <div class="ec"><span class="ec-icon">👕</span><div class="ec-eye">Coming — Wearable Art</div><div class="ec-t">Fashion Art Series</div><p class="ec-b">Art-painted limited edition hoodies, tees, custom jerseys. Each hand-finished by Chris. Numbered and signed. Not merchandise with a print — wearable originals. The same collectibility applied to fashion.</p><span class="ec-soon">Q3 2026</span></div>
-    <div class="ec"><span class="ec-icon">🏆</span><div class="ec-eye">June 12 — Fort York</div><div class="ec-t">Live Activation</div><p class="ec-b">Chris paints live at the FIFA Fan Festival. Open to the public. Marquee canvas unveils. Auction opens. Collector pieces available on-site via QR. Art meets football at the most important cultural moment in Toronto's history.</p><span class="ec-soon">Fort York Fan Festival</span></div>
-  </div>
-</section>
-
-<!-- LIST BUILDING SECTION (for internal context - shown as a "join the movement" section) -->
-<section class="list-s">
-  <div class="s-eye">Before the First Drop</div>
-  <h2 class="s-ttl" style="margin-bottom:0;">Building to 1,000<em>Collectors.</em></h2>
-  <p style="font-size:15px;color:var(--muted);margin-top:16px;margin-bottom:0;max-width:580px;line-height:1.7;">Between now and May 15, the goal is simple: grow the list from hundreds to thousands. Four ways to get there:</p>
-  <div class="list-grid" style="margin-top:40px;">
-    <div class="list-card"><span class="list-icon">📱</span><div class="list-t">Social Content</div><p class="list-b">Weekly studio footage, diamond dust process videos, the marquee piece in progress. TikTok and IG Reels drive traffic to the email capture. Organic growth through craft.</p><span class="list-target">Target: +500 subscribers</span></div>
-    <div class="list-card"><span class="list-icon">🎁</span><div class="list-t">Giveaway Campaign</div><p class="list-b">Give away one signed piece or limited print in exchange for following + signing up. Partner with Toronto FC fan accounts and Canadian soccer communities.</p><span class="list-target">Target: +200 subscribers</span></div>
-    <div class="list-card"><span class="list-icon">🗞️</span><div class="list-t">Press Coverage</div><p class="list-b">BlogTO, Toronto Life, NOW Magazine, CBC Arts. One article drives 1K–10K of targeted local traffic. PR pitches go out May 1 for May 25 publication.</p><span class="list-target">Target: +300 subscribers</span></div>
-    <div class="list-card"><span class="list-icon">🤝</span><div class="list-t">Community</div><p class="list-b">Approach Toronto's Italian community (devastated by Italy's elimination — huge emotional hook), Ghanaian community, Croatian community in Mississauga. These are the fans who will buy.</p><span class="list-target">Target: +200 subscribers</span></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
 <section class="final-s">
-  <h2 class="final-ttl">One Chance.<em>No Reprints.</em></h2>
-  <p class="final-sub">When an edition closes, it's gone. That's not marketing — that's the craft.</p>
-  <form class="final-form" id="final-form">
-    <input type="email" class="final-email" id="final-email" placeholder="your@email.com" required>
-    <button type="submit" class="final-sub-btn" id="final-btn">Get Early Access</button>
-  </form>
-  <p class="final-note">No spam · No reprints · Drops start May 15, 2026</p>
-  <div class="final-ok" id="final-ok">You're on the collector list. 🖤</div>
+<h2 class="fttl">40 Boards.<em>No Reprints.</em></h2>
+<p class="fsub">When they are gone, they are gone permanently. Join the list. Drops start May 15.</p>
+<form class="fform" id="final-form">
+<input type="email" class="femail" id="final-email" placeholder="your@email.com" required>
+<button type="submit" class="fgo" id="final-btn">Get Early Access</button>
+</form>
+<p class="fnote">No spam &middot; No reprints &middot; Drops start May 15, 2026</p>
+<div class="fok" id="final-ok">You are on the collector list. &#x1F5A4;</div>
 </section>
 
 <footer>
-  <div class="f-logo">Art By Marchese</div>
-  <ul class="f-links"><li><a href="https://artbymarchese.com">Shop</a></li><li><a href="https://artbymarchese.com/pages/contact">Commission</a></li><li><a href="https://artbymarchese.com/pages/testimonials">Collectors</a></li></ul>
-  <div class="f-social"><a href="https://instagram.com/artbymarchese">Instagram</a><a href="https://tiktok.com/@artbymarchese">TikTok</a><a href="https://facebook.com/artbymarchese">Facebook</a></div>
+<div class="fl">Art By Marchese</div>
+<ul class="flinks"><li><a href="https://artbymarchese.com">Shop</a></li><li><a href="https://artbymarchese.com/pages/contact">Commission</a></li><li><a href="https://artbymarchese.com/pages/testimonials">Collectors</a></li></ul>
+<div class="fsoc"><a href="https://instagram.com/artbymarchese">Instagram</a><a href="https://tiktok.com/@artbymarchese">TikTok</a><a href="https://facebook.com/artbymarchese">Facebook</a></div>
 </footer>
 
 <script>
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>50)});
-function tick(){
-  const t=new Date('2026-06-12T15:00:00-04:00').getTime(),diff=t-Date.now();
-  if(diff<=0)return;
-  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
-        m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
-  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
-  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
-  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
-}
-tick();setInterval(tick,1000);
-
-async function sub(email,form,ok,btn){
-  if(btn){btn.disabled=true;btn.textContent='Joining...'}
-  try{await fetch('https://formspree.io/f/xpwzgqdj',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,source:'fifa_v3',_subject:'FIFA Collector List — Art By Marchese'})})}catch(e){}
-  if(form)form.style.display='none';
-  if(ok)ok.style.display='block';
-}
-document.getElementById('main-form').addEventListener('submit',e=>{e.preventDefault();sub(document.getElementById('main-email').value,document.querySelector('.cap-form'),document.getElementById('main-ok'),document.getElementById('main-btn'))});
-document.getElementById('final-form').addEventListener('submit',e=>{
-  e.preventDefault();const btn=document.getElementById('final-btn');
-  sub(document.getElementById('final-email').value,document.getElementById('final-form'),document.getElementById('final-ok'),btn);
+// 3D BALL INTRO
+(function(){
+var overlay=document.getElementById('intro-overlay');
+var canvas=document.getElementById('ball-canvas-3d');
+var W=window.innerWidth,H=window.innerHeight;
+canvas.width=W;canvas.height=H;
+var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(60,W/H,0.1,1000);
+camera.position.z=5;
+var geo=new THREE.SphereGeometry(1.2,64,64);
+var mat=new THREE.MeshStandardMaterial({color:0xC9A84C,metalness:0.75,roughness:0.25,emissive:0x3A2500,emissiveIntensity:0.4});
+var ball=new THREE.Mesh(geo,mat);
+scene.add(ball);
+var amb=new THREE.AmbientLight(0xffffff,0.4);scene.add(amb);
+var pl1=new THREE.PointLight(0xE8C97A,4,20);pl1.position.set(4,4,6);scene.add(pl1);
+var pl2=new THREE.PointLight(0xC9A84C,2,20);pl2.position.set(-4,-2,4);scene.add(pl2);
+var rim=new THREE.PointLight(0xffffff,1.5,15);rim.position.set(0,5,-3);scene.add(rim);
+var blackMat=new THREE.MeshStandardMaterial({color:0x000000,metalness:0.1,roughness:0.9});
+var patchData=[[0,0,1.3,5],[Math.PI,0,1.3,5],[Math.PI/4,0,1,6],[Math.PI/4,Math.PI*2/3,1,6],[Math.PI/4,Math.PI*4/3,1,6],[Math.PI*3/4,Math.PI/3,1,6],[Math.PI*3/4,Math.PI,1,6],[Math.PI*3/4,Math.PI*5/3,1,6],[Math.PI/2,0,1.1,5],[Math.PI/2,Math.PI*2/5,1.1,5],[Math.PI/2,Math.PI*4/5,1.1,5],[Math.PI/2,Math.PI*6/5,1.1,5],[Math.PI/2,Math.PI*8/5,1.1,5]];
+patchData.forEach(function(p){
+  var phi=p[0],theta=p[1],sc=p[2],sides=p[3];
+  var shape=new THREE.Shape();
+  var r=0.09*sc;
+  for(var i=0;i<=sides;i++){var a=(i/sides)*Math.PI*2-Math.PI/sides;if(i===0)shape.moveTo(Math.cos(a)*r,Math.sin(a)*r);else shape.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
+  var sg=new THREE.ShapeGeometry(shape);
+  var mesh=new THREE.Mesh(sg,blackMat);
+  var x=1.22*Math.sin(phi)*Math.cos(theta),y=1.22*Math.cos(phi),z=1.22*Math.sin(phi)*Math.sin(theta);
+  mesh.position.set(x,y,z);mesh.lookAt(0,0,0);mesh.rotateY(Math.PI);
+  scene.add(mesh);
 });
+var pCount=150,pGeo=new THREE.BufferGeometry(),pPos=new Float32Array(pCount*3),pVels=[];
+for(var i=0;i<pCount;i++){pPos[i*3]=pPos[i*3+1]=pPos[i*3+2]=0;var th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI,sp=0.06+Math.random()*0.14;pVels.push({x:Math.sin(ph)*Math.cos(th)*sp,y:Math.sin(ph)*Math.sin(th)*sp,z:Math.cos(ph)*sp,life:0,ml:50+Math.random()*40});}
+pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+var pMat=new THREE.PointsMaterial({color:0xE8C97A,size:0.07,transparent:true,opacity:0});
+var parts=new THREE.Points(pGeo,pMat);scene.add(parts);
+var t=0,phase=0,impacted=false,pActive=false,pTimer=0,ADUR=90;
+function anim(){
+  requestAnimationFrame(anim);t++;
+  if(phase===0){
+    var prog=Math.min(t/ADUR,1),eased=1-Math.pow(1-prog,3);
+    ball.position.z=-30+eased*37;ball.scale.setScalar(0.05+eased*1.15);
+    ball.rotation.x+=0.025;ball.rotation.y+=0.035;
+    if(t>=78&&!impacted){impacted=true;pActive=true;pMat.opacity=1;}
+    if(t>=ADUR)phase=1;
+  }else if(phase===1){
+    var p2=(t-ADUR)/22;ball.position.z=7-p2*7;ball.rotation.x+=0.018;ball.rotation.y+=0.022;
+    if(t-ADUR>=22)phase=2;
+  }else if(phase===2){
+    ball.position.z+=(0-ball.position.z)*0.08;ball.rotation.x+=0.01;ball.rotation.y+=0.012;
+    if(t-ADUR-22>=70){overlay.classList.add('gone');setTimeout(function(){overlay.style.display='none';},900);phase=3;}
+  }else{ball.rotation.x+=0.01;ball.rotation.y+=0.012;}
+  if(pActive){
+    pTimer++;var pa=pGeo.attributes.position.array;
+    for(var j=0;j<pCount;j++){var v=pVels[j];v.life++;pa[j*3]+=v.x;pa[j*3+1]+=v.y;pa[j*3+2]+=v.z;v.x*=0.97;v.y*=0.97;v.z*=0.97;if(v.life>=v.ml){v.life=0;pa[j*3]=pa[j*3+1]=pa[j*3+2]=0;var th2=Math.random()*Math.PI*2,ph2=Math.random()*Math.PI,sp2=0.04+Math.random()*0.1;v.x=Math.sin(ph2)*Math.cos(th2)*sp2;v.y=Math.sin(ph2)*Math.sin(th2)*sp2;v.z=Math.cos(ph2)*sp2;}}
+    pGeo.attributes.position.needsUpdate=true;pMat.opacity=Math.max(0,1-pTimer/70);
+    if(pTimer>70)pActive=false;
+  }
+  pl1.intensity=4+Math.sin(t*0.06)*0.8;
+  renderer.render(scene,camera);
+}
+anim();
+overlay.addEventListener('click',function(){overlay.classList.add('gone');setTimeout(function(){overlay.style.display='none';},500);});
+})();
+// NAV
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>50);});
+// COUNTDOWN
+function tick(){var tgt=new Date('2026-06-12T15:00:00-04:00').getTime(),diff=tgt-Date.now();if(diff<=0)return;document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');document.getElementById('cd-h').textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');document.getElementById('cd-m').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');document.getElementById('cd-s').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');}
+tick();setInterval(tick,1000);
+// EMAIL
+async function sub(email,form,ok,btn){if(btn){btn.disabled=true;btn.textContent='Joining...';}try{await fetch('https://formspree.io/f/xpwzgqdj',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email:email,source:'fifa_v4',_subject:'Collector List - Art By Marchese FIFA'})});}catch(e){}if(form)form.style.display='none';if(ok)ok.style.display='block';}
+document.getElementById('main-form').addEventListener('submit',function(e){e.preventDefault();sub(document.getElementById('main-email').value,document.querySelector('.cform'),document.getElementById('main-ok'),document.getElementById('main-btn'));});
+document.getElementById('final-form').addEventListener('submit',function(e){e.preventDefault();var btn=document.getElementById('final-btn');sub(document.getElementById('final-email').value,document.getElementById('final-form'),document.getElementById('final-ok'),btn);});
 </script>
 </body>
 </html>
