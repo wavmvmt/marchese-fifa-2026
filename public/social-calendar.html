@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marchese × FIFA — Social Content Calendar</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+:root {
+  --gold:#C9A84C; --gold-l:#E8C97A; --black:#060606; --dark:#0F0F0F;
+  --mid:#181818; --panel:#1E1E1E; --border:rgba(201,168,76,0.18);
+  --text:#DDD9D0; --muted:#777570; --green:#27AE60; --red:#E05252; --blue:#5B9BD5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--black);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px}
+
+/* NAV */
+.nav{background:rgba(6,6,6,0.97);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;overflow-x:auto}
+.nav-logo{font-size:14px;font-weight:700;color:var(--gold);padding:13px 20px 13px 0;margin-right:4px;border-right:1px solid var(--border);white-space:nowrap}
+.nav a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:1px;padding:13px 14px;white-space:nowrap;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+
+/* HERO */
+.hero{padding:56px 48px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#0A0600,var(--black))}
+.hero-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#fff;margin-bottom:8px;line-height:1.1}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p{font-size:14px;color:var(--muted);max-width:620px;line-height:1.7}
+.hero-stats{display:flex;gap:40px;margin-top:32px;flex-wrap:wrap}
+.hs-val{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold-l);line-height:1}
+.hs-lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* WEEK BLOCKS */
+.week{border-bottom:1px solid var(--border)}
+.week-hd{display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:24px;padding:20px 48px;background:var(--dark);cursor:pointer;transition:background 0.2s}
+.week-hd:hover{background:var(--mid)}
+.week-date{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.week-name{font-size:16px;font-weight:600;color:#fff}
+.week-price{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-l)}
+.week-toggle{font-size:16px;color:var(--muted)}
+
+.week-body{display:none;padding:32px 48px;background:var(--panel)}
+.week-body.open{display:block}
+
+.posts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.post-card{background:var(--dark);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.post-hd{padding:12px 16px;background:var(--mid);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.post-platform{font-size:16px}
+.post-type{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.post-timing{font-size:11px;color:var(--muted);margin-left:auto}
+.post-body{padding:16px}
+.post-caption{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap;margin-bottom:12px}
+.post-hashtags{font-size:12px;color:var(--blue);line-height:1.8}
+.copy-btn{background:rgba(201,168,76,0.1);border:1px solid var(--border);color:var(--gold);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background 0.2s;width:100%;margin-top:8px}
+.copy-btn:hover{background:rgba(201,168,76,0.2)}
+
+.drop-brief{background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.15);padding:20px 24px;margin-bottom:20px;border-radius:4px}
+.drop-brief-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.drop-brief-body{font-size:13px;color:var(--muted);line-height:1.7}
+
+.email-card{background:var(--dark);border-left:3px solid var(--gold);padding:20px 24px;margin-bottom:16px;border-radius:0 4px 4px 0}
+.email-timing{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.email-subj{font-size:15px;font-weight:600;color:#fff;margin-bottom:12px}
+.email-body{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap}
+
+@media(max-width:768px){
+  .hero{padding:40px 24px}
+  .week-hd{grid-template-columns:1fr;padding:16px 24px;gap:8px}
+  .week-body{padding:24px}
+  .posts-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">📅 FIFA Content Calendar</div>
+  <a href="#w1">Apr 12</a><a href="#w2">Apr 19</a><a href="#w3">Apr 26</a>
+  <a href="#w4">May 3</a><a href="#w5">May 10</a><a href="#w6">May 17</a>
+  <a href="#w7">May 24</a><a href="#w8">May 31</a><a href="#w9">Jun 7</a>
+  <a href="#w10">Jun 12 🏆</a>
+</div>
+
+<div class="hero">
+  <div class="hero-eye">Art By Marchese × FIFA World Cup 2026</div>
+  <h1>9 Weeks. 9 Drops.<br><em>Every Post Written.</em></h1>
+  <p>Complete social content for every platform, every week, April 12 through June 12. Click any week to expand. Copy each post with one click. No thinking required — just execute.</p>
+  <div class="hero-stats">
+    <div><div class="hs-val">63+</div><div class="hs-lab">Posts Written</div></div>
+    <div><div class="hs-val">9</div><div class="hs-lab">Drop Weeks</div></div>
+    <div><div class="hs-val">4</div><div class="hs-lab">Platforms</div></div>
+    <div><div class="hs-val">68</div><div class="hs-lab">Days to June 12</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 1 ═══════════════════ -->
+<div class="week" id="w1">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">Apr 12 — Drop 1</div>
+    <div class="week-name">🌍 "World Class" — The Series Opener</div>
+    <div class="week-price">$399 · Ed. 50</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">First drop of the FIFA × Marchese series. A footballer draped in luxury — diamond dust on the boots. The collision of the world's most universal sport with the world's most exclusive aesthetic. Edition of 50. Drop goes live Friday April 12. Email goes out Thursday night.</div>
+    </div>
+
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">TikTok / Reels — Monday Teaser</span><span class="post-timing">Mon Apr 7</span></div>
+        <div class="post-body">
+          <div class="post-caption">Something is coming.
+
+68 days until the FIFA World Cup comes to Toronto.
+
+I've been in the studio every day.
+
+9 pieces. 9 drops. One per week until opening day.
+
+Drop #1 lands Saturday. 🔥⚽
+
+Link in bio — get on the list before it goes public.</div>
+          <div class="post-hashtags">#artbymarchese #fifaworldcup2026 #toronto #limitededition #streetart #luxuryart #canadianart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🎨</span><span class="post-type">TikTok / Reels — Process Video</span><span class="post-timing">Wed Apr 9</span></div>
+        <div class="post-body">
+          <div class="post-caption">POV: Pouring diamond dust on a $399 skateboard deck in my Toronto studio ✨
+
+This is Drop #1 of my FIFA World Cup series.
+
+"World Class" — limited edition of 50. Drops Saturday.
+
+When this edition closes, it's gone forever. No reprints. Ever. 🇨🇦</div>
+          <div class="post-hashtags">#artprocess #diamonddust #artbymarchese #torontoart #fifaworldcup #limitedart #skateboardart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">TikTok / Reels — DROP IS LIVE</span><span class="post-timing">Sat Apr 12 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">DROP #1 IS LIVE. 🔥
+
+"World Class" — the first piece in the FIFA × Marchese collection.
+
+Diamond dust. 7-ply maple. High-gloss resin. Wall hanger included.
+
+Edition of 50. $399. No reprints after this edition closes.
+
+Link in bio. Go. ⚽🎨</div>
+          <div class="post-hashtags">#artbymarchese #newdrop #limitededition #fifaworldcup2026 #toronto #collectibleart #streetart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📸</span><span class="post-type">IG Story Sequence</span><span class="post-timing">Sat Apr 12</span></div>
+        <div class="post-body">
+          <div class="post-caption">Story 1: "68 days until FIFA comes to Toronto 🏆"
+Story 2: [Show piece] "Drop #1 just went live — 'World Class'"
+Story 3: "Edition of 50. $399. Link in bio. No reprints ever."
+Story 4: Countdown sticker to June 12 + "Get on the drop list 👇"</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Story Script</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thursday Apr 10, 8pm EST</div>
+      <div class="email-subj">Drop 1 tomorrow: "World Class" — Edition of 50 ⏰</div>
+      <div class="email-body">Tomorrow at noon.
+
+"World Class" — Drop #1 of the FIFA × Marchese collection — goes live.
+
+Edition of 50. $399. Diamond dust. 7-ply Canadian maple. Wall hanger included.
+
+You're getting this 24 hours before the public post. That's what this list is for.
+
+This is the first of 9 drops leading up to the FIFA World Cup opening day in Toronto on June 12.
+Canada's first ever home World Cup match. The biggest moment this city has seen in a generation.
+
+I've been in the studio every day building this collection.
+
+Drop goes live Saturday April 12 at noon EST:
+→ artbymarchese.com
+
+When this edition closes, it's gone permanently.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 2 ═══════════════════ -->
+<div class="week" id="w2">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">Apr 19 — Drop 2</div>
+    <div class="week-name">🍁 "Home Soil" — Canada's Moment</div>
+    <div class="week-price">$450 · Ed. 25</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Canada's first ever home World Cup game — June 12. This piece is specifically for that moment. Maple leaf, luxury codes, diamond dust. Edition of only 25. Rarest skateboard in the series. Lean into the Canadian pride angle hard this week.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">TikTok / Reels — Monday Teaser</span><span class="post-timing">Mon Apr 14</span></div>
+        <div class="post-body">
+          <div class="post-caption">June 12, 2026.
+
+Canada plays their first EVER home FIFA World Cup game. On Canadian soil. In Toronto.
+
+I had to paint that moment.
+
+Drop #2 of the FIFA series lands Saturday. 🍁⚽
+
+Edition of only 25. This one's for us.</div>
+          <div class="post-hashtags">#canada #canadasoccer #fifaworldcup2026 #toronto #artbymarchese #canadianart #homegame</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🎨</span><span class="post-type">Process Video</span><span class="post-timing">Wed Apr 16</span></div>
+        <div class="post-body">
+          <div class="post-caption">Painting history.
+
+Drop #2 is "Home Soil" — made specifically for Canada's first ever home World Cup game.
+
+June 12. Toronto. That game will never happen again.
+
+This piece captures that.
+
+Diamond dust. Maple. Limited to 25. Drops Saturday. 🍁✨
+
+Link in bio to get notified.</div>
+          <div class="post-hashtags">#canadasoccer #canmnt #toronto #artbymarchese #diamonddust #limitededition #fifaworldcup</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat Apr 19 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #2 is LIVE. 🍁
+
+"Home Soil" — made for Canada's first ever home World Cup game. June 12. Toronto.
+
+Edition of 25. $450. This is the rarest skateboard in the FIFA series.
+
+After 25, it's gone permanently. This moment will never happen again. Neither will this piece.
+
+Link in bio. ⚽🇨🇦</div>
+          <div class="post-hashtags">#artbymarchese #canada #homegame #limitededition #fifaworldcup2026 #toronto #canadianart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📸</span><span class="post-type">IG Stories</span><span class="post-timing">Sat Apr 19</span></div>
+        <div class="post-body">
+          <div class="post-caption">Story 1: 🍁 "Canada plays their first home World Cup game in 54 days"
+Story 2: [Show piece] "I made something for that"
+Story 3: "Home Soil — Edition of 25 — $450"
+Story 4: "Only 25 will ever exist. Link in bio." + poll sticker: "Are you going to the Canada game? YES / WISH I WAS"</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Story Script</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thursday Apr 17, 8pm EST</div>
+      <div class="email-subj">Drop 2 tomorrow: "Home Soil" — Canada's first home World Cup. Edition of 25. 🍁</div>
+      <div class="email-body">Tomorrow at noon, Drop #2 lands.
+
+"Home Soil."
+
+Canada plays their first ever FIFA World Cup home match on June 12 in Toronto.
+That game will never happen again in our lifetime.
+
+I made a piece for that moment. 25 of them, to be exact.
+
+Edition of 25. $450. Diamond dust. 7-ply maple. Made in Canada, for Canada.
+
+After 25, it's gone. This is the rarest deck in the FIFA series.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 3 ═══════════════════ -->
+<div class="week" id="w3">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">Apr 26 — Drop 3</div>
+    <div class="week-name">🇩🇪 "Der Meister" — Germany × Luxury</div>
+    <div class="week-price">$399 · Ed. 30</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Germany vs Ivory Coast — Toronto June 20. German engineering meets haute couture. Target: German diaspora in Toronto (massive), German football fans globally, luxury collectors who appreciate the aesthetic crossover. Tag German football accounts.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon Apr 21</span></div>
+        <div class="post-body">
+          <div class="post-caption">Germany comes to Toronto on June 20.
+
+And I painted that.
+
+Drop #3 of the FIFA series — "Der Meister" — lands Saturday.
+
+German engineering. Haute couture. Diamond dust.
+
+Turns out precision sounds the same in German and French. 🇩🇪✨</div>
+          <div class="post-hashtags">#germany #germanyfootball #dfb #toronto #artbymarchese #fifaworldcup2026 #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat Apr 26 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #3 — "Der Meister" — is LIVE. 🇩🇪
+
+Germany plays Toronto June 20. This piece is for that match — and for everyone who understands that German engineering and haute couture have always shared a philosophy.
+
+Precision. Excellence. No shortcuts.
+
+Edition of 30. $399. Diamond dust. Made in Canada.
+Link in bio. Kein Nachdruck. Nie. (No reprints. Ever.) ⚽</div>
+          <div class="post-hashtags">#germany #dermeister #artbymarchese #fifaworldcup2026 #toronto #limitededition #collectibleart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🎨</span><span class="post-type">Process Video</span><span class="post-timing">Wed Apr 23</span></div>
+        <div class="post-body">
+          <div class="post-caption">What does German precision look like in diamond dust? 🇩🇪✨
+
+Building Drop #3 of the FIFA × Marchese series — "Der Meister."
+
+Germany. Luxury. Canadian maple. High-gloss resin.
+
+Drops Saturday. Edition of 30. No reprints.
+
+Link in bio to get early access. ⚽</div>
+          <div class="post-hashtags">#artprocess #germany #fifaworldcup #artbymarchese #diamonddust #toronto #streetart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📊</span><span class="post-type">IG Poll Story</span><span class="post-timing">Tue Apr 22</span></div>
+        <div class="post-body">
+          <div class="post-caption">Story: "Germany or Ivory Coast — who wins June 20 in Toronto?"
+Poll: 🇩🇪 GERMANY / 🇨🇮 IVORY COAST
+
+Follow-up story: "Either way, this piece is for the match. 'Der Meister' drops Saturday. Link in bio."</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Story Script</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thu Apr 24, 8pm EST</div>
+      <div class="email-subj">Tomorrow: "Der Meister" — Germany × Luxury. Edition of 30. 🇩🇪</div>
+      <div class="email-body">Tomorrow at noon, Drop #3 of the FIFA series lands.
+
+"Der Meister."
+
+Germany comes to Toronto on June 20. German engineering and haute couture have always shared a philosophy — precision, excellence, no shortcuts. This piece is for that intersection.
+
+Edition of 30. $399. Diamond dust. Made in Canada.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+No reprints after this edition closes.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 4 ═══════════════════ -->
+<div class="week" id="w4">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">May 3 — Drop 4</div>
+    <div class="week-name">🇬🇭 "Gold Coast" — Ghana × Culture</div>
+    <div class="week-price">$399 · Ed. 25</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Ghana vs Panama — Toronto June 17. Kente-inspired colourways, gold and diamond dust, luxury visual codes. Toronto has one of the largest Ghanaian diaspora communities in North America. This drop should hit hard there. Tag Black Stars accounts, Ghanaian community pages in Toronto.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon Apr 28</span></div>
+        <div class="post-body">
+          <div class="post-caption">Ghana hits Toronto on June 17.
+
+And I made something for the diaspora that doesn't have to choose.
+
+Drop #4 of the FIFA series — "Gold Coast" — drops Saturday.
+
+Kente. Gold. Diamond dust. Luxury.
+
+The culture was always this beautiful. 🇬🇭✨</div>
+          <div class="post-hashtags">#ghana #blackstars #ghanaiandiaspora #toronto #artbymarchese #fifaworldcup2026 #goldcoast</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat May 3 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #4 — "Gold Coast" — is LIVE. 🇬🇭
+
+For the diaspora that doesn't have to choose.
+
+Kente-inspired colourways. Diamond dust. Luxury. Gold.
+
+Ghana plays Toronto June 17. This piece celebrates that. This piece is for the culture.
+
+Edition of 25. $399. When this closes, it's gone forever.
+Link in bio. ⚽🌍</div>
+          <div class="post-hashtags">#ghana #blackstars #artbymarchese #goldcoast #fifaworldcup2026 #toronto #diaspora</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🎨</span><span class="post-type">Process Video</span><span class="post-timing">Wed Apr 30</span></div>
+        <div class="post-body">
+          <div class="post-caption">Kente patterns. Diamond dust. Gold paint.
+
+Building "Gold Coast" — Drop #4 of the FIFA × Marchese series, made for Ghana's match in Toronto on June 17. 🇬🇭
+
+The Black Stars bring that energy to Toronto.
+
+Edition of 25. Drops Saturday. No reprints.
+
+Link in bio. ✨⚽</div>
+          <div class="post-hashtags">#artprocess #ghana #kente #artbymarchese #diamonddust #fifaworldcup #torontoart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📸</span><span class="post-type">Community Outreach Post</span><span class="post-timing">Thu May 1</span></div>
+        <div class="post-body">
+          <div class="post-caption">Toronto is home to one of the largest Ghanaian communities in North America.
+
+June 17, the Black Stars play at Toronto Stadium.
+
+I made something for that moment. "Gold Coast" — a piece that honours the culture, the pride, and the occasion. 🇬🇭
+
+Drops this Saturday. Limited to 25. Link in bio.</div>
+          <div class="post-hashtags">#ghanaianstoronto #blackstars #ghana #toronto #artbymarchese #fifaworldcup2026</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thu May 1, 8pm EST</div>
+      <div class="email-subj">Tomorrow: "Gold Coast" — Ghana × Luxury. For the diaspora. Edition of 25. 🇬🇭</div>
+      <div class="email-body">Tomorrow at noon, Drop #4 lands.
+
+"Gold Coast."
+
+Ghana plays Toronto June 17. Toronto has one of the largest Ghanaian communities in North America — this drop is for them. Kente-inspired colourways, gold paint, diamond dust. Luxury codes applied to cultural pride.
+
+Edition of 25. $399. Gone when it closes.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 5 ═══════════════════ -->
+<div class="week" id="w5">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">May 10 — Drop 5</div>
+    <div class="week-name">🇭🇷 "Adriatic Blue" — Croatia × Dior</div>
+    <div class="week-price">$399 · Ed. 30</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Croatia vs Panama — Toronto June 23. The checkerboard is one of the most iconic visual identities in sport. Layered with Dior's aesthetic and deep Adriatic blues. Croatian diaspora in Toronto is significant. Tag Croatia national team fan accounts.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon May 5</span></div>
+        <div class="post-body">
+          <div class="post-caption">The checkerboard was always luxury.
+
+Croatia comes to Toronto June 23.
+
+Drop #5 of the FIFA series — "Adriatic Blue" — drops Saturday.
+
+Dior. Croatia. Diamond dust. The deep blues of the Adriatic.
+
+Some things just belong together. 🇭🇷✨</div>
+          <div class="post-hashtags">#croatia #vatreni #toronto #artbymarchese #fifaworldcup2026 #dior #adriatic #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat May 10 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #5 — "Adriatic Blue" — is LIVE. 🇭🇷
+
+The checkerboard was always luxury. Croatia's iconic visual identity meets Dior's codes. Deep blues. Precise pattern. Diamond dust.
+
+Croatia plays Toronto June 23. This piece is for that match and everyone who calls Croatia home.
+
+Edition of 30. $399. No reprints after this closes.
+Link in bio. ⚽</div>
+          <div class="post-hashtags">#croatia #artbymarchese #adriaticblue #dior #fifaworldcup2026 #toronto #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thu May 8, 8pm EST</div>
+      <div class="email-subj">Tomorrow: "Adriatic Blue" — Croatia × Dior. Edition of 30. 🇭🇷</div>
+      <div class="email-body">Tomorrow at noon — Drop #5.
+
+"Adriatic Blue."
+
+Croatia comes to Toronto June 23. The checkerboard was always luxury — Croatia's iconic visual identity meets Dior's codes. Deep blues. Precise pattern. Diamond dust.
+
+Edition of 30. $399. Gone when it closes.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 6 ═══════════════════ -->
+<div class="week" id="w6">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">May 17 — Drop 6</div>
+    <div class="week-name">🇸🇳 "The Lions" — Senegal × Pride</div>
+    <div class="week-price">$399 · Ed. 25</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Senegal vs playoff winner — Toronto June 26. Lions of Teranga. Gold, green, diamond dust. Pan-African angle — this one travels globally on social. Tag African football accounts, Senegalese diaspora, Afrobeats crossover accounts who understand luxury × culture.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon May 12</span></div>
+        <div class="post-body">
+          <div class="post-caption">The Lions of Teranga come to Toronto on June 26.
+
+Drop #6 of the FIFA series — "The Lions" — drops Saturday.
+
+For the continent. For the diaspora. For the culture.
+
+Gold. Green. Diamond dust. Luxury.
+
+Senegal's pride — rendered in a language the world understands. 🦁🇸🇳✨</div>
+          <div class="post-hashtags">#senegal #lionsofteranga #africa #toronto #artbymarchese #fifaworldcup2026 #thelions</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat May 17 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #6 — "The Lions" — is LIVE. 🦁🇸🇳
+
+For the continent.
+
+The Lions of Teranga play Toronto June 26. This piece is for the culture — for the pride that Senegalese football brings to the world stage, rendered in gold, green, and diamond dust.
+
+Edition of 25. $399. This one travels globally.
+Link in bio. ⚽🌍</div>
+          <div class="post-hashtags">#senegal #lionsofteranga #artbymarchese #thelions #fifaworldcup2026 #africa #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thu May 15, 8pm EST</div>
+      <div class="email-subj">Tomorrow: "The Lions" — Senegal × Pride. For the continent. Edition of 25. 🦁</div>
+      <div class="email-body">Tomorrow at noon — Drop #6.
+
+"The Lions."
+
+Senegal plays Toronto June 26. The Lions of Teranga bring one of football's most passionate fanbases to our city. This piece is for that pride — gold, green, diamond dust.
+
+Edition of 25. $399. Gone when it closes.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 7 ═══════════════════ -->
+<div class="week" id="w7">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">May 24 — Drop 7</div>
+    <div class="week-name">⭐ "Armband" — THE RAREST (Ed. 10)</div>
+    <div class="week-price">$499 · Ed. 10</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief — RAREST IN THE SERIES</div>
+      <div class="drop-brief-body">Edition of 10. The rarest piece in the entire FIFA × Marchese collection. 3 weeks to opening day. Build maximum urgency. This one will sell in hours. Email goes out Wednesday night (not Thursday) because of scarcity. Post multiple times on drop day.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon May 19</span></div>
+        <div class="post-body">
+          <div class="post-caption">3 weeks to opening day.
+
+Drop #7 of the FIFA series lands Saturday.
+
+"Armband."
+
+Edition of 10. The rarest piece in the collection.
+
+The captain carries the nation. This piece carries that moment. 🏆⭐
+
+Only 10 will ever exist. Not 11. 10.</div>
+          <div class="post-hashtags">#artbymarchese #fifaworldcup2026 #toronto #limitededition #raredrop #collectibleart #captain</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live — POST TWICE</span><span class="post-timing">Sat May 24 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">THE RAREST IS LIVE.
+
+"Armband" — Drop #7 of the FIFA × Marchese series.
+
+Edition of 10. $499. That's it. 10 pieces exist on this earth. Zero reprints. Zero exceptions.
+
+3 weeks to the FIFA World Cup opening day in Toronto.
+
+The captain's piece. The rarest in the collection.
+
+Link in bio. Move fast. ⭐⚽🏆</div>
+          <div class="post-hashtags">#artbymarchese #raredrop #fifaworldcup2026 #toronto #limitededition #collectibleart #soldout</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">FOMO Post — Same Day If Selling Fast</span><span class="post-timing">Sat May 24 — 6pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Update: [X] of the 10 "Armband" pieces are gone.
+
+[X] remain.
+
+When this is sold out, this conversation ends permanently.
+
+Link in bio. ⭐</div>
+          <div class="post-hashtags">#artbymarchese #soldingfast #limitededition #fifaworldcup2026</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📧</span><span class="post-type">EARLY EMAIL — Send WED night</span><span class="post-timing">Wed May 21, 8pm</span></div>
+        <div class="post-body">
+          <div class="post-caption">Subject: Heads up — Drop 7 is the rarest. Edition of 10. Saturday. ⭐
+
+Special notice for the list — Drop #7 "Armband" lands Saturday.
+
+Edition of 10. $499. The rarest piece in the entire FIFA × Marchese collection.
+
+Giving you 3 days notice instead of 1 because of how rare this is. 10 pieces exist. The list gets first crack.
+
+→ artbymarchese.com — live Saturday at noon.
+
+— Chris</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 8 ═══════════════════ -->
+<div class="week" id="w8">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">May 31 — Drop 8</div>
+    <div class="week-name">🇵🇦 "El Grito" — Panama × Gucci</div>
+    <div class="week-price">$399 · Ed. 25</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief</div>
+      <div class="drop-brief-body">Panama plays Toronto June 17 (vs Ghana) and June 23 (vs Croatia). Two home games. Gucci visual codes, warm Central American palette. 2 weeks to opening day — energy is building city-wide. Lean into "the city is waking up" angle.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Monday Teaser</span><span class="post-timing">Mon May 26</span></div>
+        <div class="post-body">
+          <div class="post-caption">2 weeks to opening day.
+
+Toronto can feel it.
+
+Drop #8 — "El Grito" — drops Saturday.
+
+Panama plays Toronto TWICE. June 17 and June 23.
+
+This piece is the roar before the game. The breath before the whistle.
+
+When everything is still possible. 🇵🇦⚽</div>
+          <div class="post-hashtags">#panama #loscanalerosdefutbol #toronto #artbymarchese #fifaworldcup2026 #elgrito #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔴</span><span class="post-type">Drop Is Live</span><span class="post-timing">Sat May 31 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #8 — "El Grito" — is LIVE. 🇵🇦
+
+The roar before the game.
+
+Panama plays Toronto twice — June 17 and June 23. This piece captures that energy. The moment before the whistle. When everything is still possible.
+
+Gucci visual codes. Warm palette. Diamond dust. Edition of 25.
+
+2 weeks to opening day. The city is waking up.
+Link in bio. ⚽🔥</div>
+          <div class="post-hashtags">#panama #artbymarchese #elgrito #fifaworldcup2026 #toronto #gucci #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card">
+      <div class="email-timing">Email — Send Thu May 29, 8pm EST</div>
+      <div class="email-subj">Tomorrow: "El Grito" — Panama × Luxury. 2 weeks to opening day. 🇵🇦</div>
+      <div class="email-body">Tomorrow at noon — Drop #8.
+
+"El Grito."
+
+Two weeks to opening day. Toronto is starting to feel it.
+
+Panama plays Toronto twice — June 17 and June 23. "El Grito" captures the energy before the whistle. When everything is still possible.
+
+Edition of 25. $399. Gone when it closes.
+
+→ artbymarchese.com — live tomorrow at noon.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ WEEK 9 ═══════════════════ -->
+<div class="week" id="w9">
+  <div class="week-hd" onclick="toggleWeek(this)">
+    <div class="week-date">Jun 7 — Drop 9</div>
+    <div class="week-name">🔮 SURPRISE DROP — Subscribers Only</div>
+    <div class="week-price">TBA · Ed. TBA</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief">
+      <div class="drop-brief-title">Drop Brief — SUBSCRIBERS ONLY REVEAL</div>
+      <div class="drop-brief-body">The final drop before opening day. Revealed ONLY to email subscribers — not on social until after it sells out. This is the reward for being on the list. Creates massive urgency to sign up. Chris decides the subject based on what feels right at this point in the campaign. Suggest: a Toronto-specific piece, or something tied to whichever team is generating the most heat in the city.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📧</span><span class="post-type">Subscriber-Only Email — Send Mon Jun 2</span><span class="post-timing">Mon Jun 2 — 12pm EST</span></div>
+        <div class="post-body">
+          <div class="post-caption">Subject: Drop 9. Subscribers only. This doesn't go on social. 🔮
+
+You're on the list. So you get this.
+
+Drop #9 — the final drop before opening day — goes live Saturday June 7.
+
+This one isn't going on social until AFTER it sells out.
+
+The list gets first access, then the public finds out it's gone.
+
+[Chris writes the piece reveal here — 2-3 sentences on what it is and why]
+
+Edition of [X]. $[X]. Saturday June 7 at noon.
+
+→ artbymarchese.com
+
+This is why you're on the list.
+
+— Chris</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Email Template</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">📱</span><span class="post-type">Social Post — After It Sells Out</span><span class="post-timing">After sellout</span></div>
+        <div class="post-body">
+          <div class="post-caption">Drop #9 just sold out.
+
+To the 500+ people on the list — you had first access. That's what the list is for.
+
+To everyone else — link in bio. 5 days to opening day.
+
+The marquee piece unveils June 12 at Fort York Fan Festival.
+
+This is just the beginning. 🔥⚽</div>
+          <div class="post-hashtags">#soldout #artbymarchese #fifaworldcup2026 #toronto #limitededition</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ JUNE 12 — OPENING DAY ═══════════════════ -->
+<div class="week" id="w10" style="border:1px solid rgba(201,168,76,0.35)">
+  <div class="week-hd" onclick="toggleWeek(this)" style="background:linear-gradient(135deg,#120C00,var(--dark))">
+    <div class="week-date" style="color:#E8C97A;font-size:13px">🏆 JUN 12 — OPENING DAY</div>
+    <div class="week-name" style="font-size:18px">THE MARQUEE CANVAS UNVEIL — Live at Fort York</div>
+    <div class="week-price" style="font-size:26px">$15K+</div>
+    <div class="week-toggle">▼</div>
+  </div>
+  <div class="week-body">
+    <div class="drop-brief" style="border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.06)">
+      <div class="drop-brief-title">Opening Day Brief — Maximum Output</div>
+      <div class="drop-brief-body">Canada vs. European playoff winner. 3pm kickoff. Chris is at Fort York Fan Festival. Live painting activation. Marquee canvas is unveiled and auction opens. Film everything. This is the most important content day of the year. Post from morning through night. Every post links to the live auction.</div>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🌅</span><span class="post-type">Morning Post — 9am</span><span class="post-timing">Fri Jun 12 — 9am</span></div>
+        <div class="post-body">
+          <div class="post-caption">Today is the day.
+
+Canada plays their first ever home World Cup game in 5 hours.
+
+I'll be at Fort York Fan Festival with the full FIFA × Marchese collection — and the marquee canvas unveils at noon.
+
+One piece. One auction. One buyer. For keeps.
+
+Come find me. ⚽🏆🇨🇦</div>
+          <div class="post-hashtags">#artbymarchese #fifaworldcup2026 #toronto #openingday #canada #fortyork #fanfestival</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🎨</span><span class="post-type">Live Painting Content — 11am-1pm</span><span class="post-timing">Fri Jun 12 — noon</span></div>
+        <div class="post-body">
+          <div class="post-caption">LIVE at Fort York Fan Festival. 🎨
+
+Painting in real time at the FIFA World Cup. Toronto. Canada. June 12.
+
+This is the moment I've been building toward for 9 weeks.
+
+The marquee canvas auction is OPEN. Link in bio. Bids close July 2. ⚽🏆</div>
+          <div class="post-hashtags">#livepainting #artbymarchese #fifaworldcup2026 #toronto #fortyork #canada #auction</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🔥</span><span class="post-type">Marquee Canvas Reveal — Noon</span><span class="post-timing">Fri Jun 12 — noon</span></div>
+        <div class="post-body">
+          <div class="post-caption">It's here.
+
+"The Beautiful Game."
+
+The marquee canvas of the FIFA × Marchese collection is unveiled.
+
+1 of 1. Original. Acrylic, resin, diamond dust. Made in Canada.
+
+The auction is OPEN. Starting bid $15,000. Closes July 2 — Toronto's final match.
+
+Link in bio. Place your bid. 🏆⚽</div>
+          <div class="post-hashtags">#artbymarchese #thebeautifulgame #marquee #auction #fifaworldcup2026 #toronto #originalart</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+
+      <div class="post-card">
+        <div class="post-hd"><span class="post-platform">🌙</span><span class="post-type">End of Day Recap — 10pm</span><span class="post-timing">Fri Jun 12 — 10pm</span></div>
+        <div class="post-body">
+          <div class="post-caption">What a day.
+
+Canada. Toronto. The World Cup.
+
+We were there. We made art in the middle of it. The marquee canvas is unveiled. The auction is live.
+
+9 weeks of drops. 68 days of building. All for this moment.
+
+Thank you Toronto. We're just getting started. 🇨🇦🏆🎨</div>
+          <div class="post-hashtags">#artbymarchese #toronto #fifaworldcup2026 #canada #openingday #werehere</div>
+          <button class="copy-btn" onclick="copyPost(this)">Copy Caption</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-card" style="border-left-color:var(--gold-l)">
+      <div class="email-timing">Email — Opening Day — Send 9am Jun 12</div>
+      <div class="email-subj">Today. Fort York. The marquee canvas is live. 🏆</div>
+      <div class="email-body">Today is the day.
+
+9 weeks. 9 drops. All leading to this moment.
+
+Canada's first ever home World Cup game kicks off at 3pm in Toronto.
+
+I'll be at Fort York Fan Festival from 11am with the full FIFA × Marchese collection.
+
+At noon, the marquee canvas — "The Beautiful Game" — unveils live. The auction opens immediately.
+
+Starting bid: $15,000.
+Auction closes: July 2 — Toronto's final match.
+Edition: 1 of 1. Never reproduced.
+
+→ Bid now: artbymarchese.com
+
+If you're in Toronto, come find me at Fort York.
+
+This is what we built toward.
+
+— Chris</div>
+      <button class="copy-btn" onclick="copyPost(this)">Copy Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:var(--dark);padding:40px 48px;border-top:1px solid var(--border);text-align:center">
+  <div style="font-size:12px;color:var(--muted)">Art By Marchese × FIFA World Cup 2026 — Content Calendar — Built by WAVMVMT</div>
+  <div style="font-size:11px;color:rgba(119,117,112,0.5);margin-top:8px">April 12 → July 2, 2026</div>
+</div>
+
+<script>
+function toggleWeek(hd) {
+  const body = hd.nextElementSibling;
+  const arrow = hd.querySelector('.week-toggle');
+  body.classList.toggle('open');
+  arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+function copyPost(btn) {
+  const card = btn.closest('.post-body, .email-card');
+  const caption = card.querySelector('.post-caption, .email-body');
+  if (!caption) return;
+  navigator.clipboard.writeText(caption.innerText.trim()).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.style.background = 'rgba(39,174,96,0.2)';
+    btn.style.borderColor = 'rgba(39,174,96,0.4)';
+    btn.style.color = '#27AE60';
+    setTimeout(() => {
+      btn.textContent = 'Copy Caption';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2000);
+  });
+}
+
+// Auto-open Week 1 on load
+document.querySelector('.week-hd').click();
+</script>
+</body>
+</html>
